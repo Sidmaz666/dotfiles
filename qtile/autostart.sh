@@ -5,3 +5,4 @@ picom &
 volumeicon &
 flameshot &
 copyq &
+xidlehook --not-when-audio --not-when-fullscreen --timer 300 'systemctl suspend' '' &

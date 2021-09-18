@@ -1,0 +1,15 @@
+[Unit]
+Description=Lock Screen Using BetterLockScreen
+Before=sleep.target
+Before=suspend.target
+
+[Service]
+User=%i
+Environment=DISPLAY=:0
+ExecStartPre=/usr/bin/xset dpms force suspend   
+ExecStart=/usr/bin/betterlockscreen -l
+ExecStartPost=/usr/bin/sleep 1
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target
