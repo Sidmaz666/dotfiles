@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=yuki
+Description=sakunainyuki
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/yuki
+ScriptFile=/usr/share/plymouth/themes/yuki/yuki.script

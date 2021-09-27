@@ -31,7 +31,7 @@ if [ -e "$FIFO_UEBERZUG" ]; then
                            [path]="$frame") \
             > "$FIFO_UEBERZUG"
             # Sleep between frames to make the animation smooth.
-            sleep .07
+            sleep .01
         done
 
     elif [[ "$1" == "pdfpreview" ]]; then

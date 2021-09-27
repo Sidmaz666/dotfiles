@@ -26,15 +26,17 @@ def icon(fg='text', bg='dark', fontsize=16, text="?"):
 def powerline(fg="light", bg="dark"):
     return widget.TextBox(
         **base(fg, bg),
-        text="\u25E2",
-        fontsize=60,
+       # text="\u25E2",
+       text="  ",
+        fontsize=30,
         padding=-3
     )
 def powerline1(fg="light", bg="dark"):
     return widget.TextBox(
         **base(fg, bg),
-        text="\u25E4",
-        fontsize=60,
+       # text="\u25E4",
+       text= " | ",
+        fontsize=30,
         padding=-3
     )
 
@@ -50,17 +52,17 @@ def workspaces():
             padding_y=8,
             padding_x=5,
             borderwidth=1,
-            active=colors['active'],
-            inactive=colors['inactive'],
+            active=colors['color3'],
+            inactive=colors['light'],
             rounded=False,
             highlight_method='block',
             urgent_alert_method='block',
-            urgent_border=colors['urgent'],
-            this_current_screen_border=colors['focus'],
-            this_screen_border=colors['grey'],
+            urgent_border=colors['light'],
+            this_current_screen_border=colors['text'],
+            this_screen_border=colors['dark'],
             other_current_screen_border=colors['dark'],
             other_screen_border=colors['dark'],
-            disable_drag=True
+            disable_drag=False
         ),
     ]
 
@@ -69,45 +71,46 @@ def workspaces():
 
 primary_widgets = [
 
- widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme sms")}),
- powerline1('dark','light'),
-   widget.Memory(**base(fg='dark',bg='light'), fontsize=15),
-   widget.CPU(**base(fg='dark',bg='light'), fontsize=15),
-  powerline1('light','color1'),
-  widget.Clock(**base(bg='color1'), format='%A:%d-%b-%Y %l:%M:%S %p ', padding=1),
-   powerline1('color1','dark'),
+ widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme sm")}),
+ powerline1('light','dark'),
+   widget.Memory(**base(fg='light',bg='dark'), fontsize=15),
    separator(),
+   widget.CPU(**base(fg='light',bg='dark'), fontsize=15),
+  powerline1('focus','dark'),
+  widget.Clock(**base(bg='dark',fg="light"), format='%A:%d-%b-%Y %l:%M:%S %p ', padding=1),
+   powerline1('color3','dark'),
+   #separator(),
 
  widget.WindowName(**base(fg='light'), fontsize=14),
 
-    powerline('color3', 'dark'),
+    powerline1('color1', 'dark'),
 
-   icon(bg="color3", text=' '),  # Icon: nf-fa-feed
+   icon(bg="dark", fg="light", text=' '),  # Icon: nf-fa-feed
 
-    widget.Net(**base(bg='color3'), interface='wlp1s0'),
+    widget.Net(**base(bg='dark', fg="light"), interface='wlp1s0'),
 
-    powerline('color1','color3'),
+    powerline1('color2','dark'),
 
-    widget.Battery(**base(bg='color1'),charge_char='',unknown_char=' ',discharge_char='', format= '{char} {percent:2.0%}', padding=5),
+    widget.Battery(**base(bg='dark',fg="light"),charge_char='',unknown_char=' ',discharge_char='', format= '{char} {percent:2.0%}', padding=5),
 
-    powerline('color2','color1'),
+    powerline1('light','dark'),
 
-    widget.CurrentLayoutIcon(**base(bg='color2'), scale=0.65),
+    widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.65),
 
-    widget.CurrentLayout(**base(bg='color2'), padding=5),
+    widget.CurrentLayout(**base(bg='dark', fg="light"), padding=5),
 
-   powerline('color1', 'color2'),
+   powerline1('focus', 'dark'),
 
-    icon(bg='color1',text='醙 '),  # Icon: nf-fa-feed
+    icon(bg='dark',fg="light",text='醙 '),  # Icon: nf-fa-feed
 
-    widget.Volume(**base(bg='color1')),
+    widget.Volume(**base(bg='dark', fg="light")),
 
-    icon(bg='color1',text=' ∮'),  # Icon: nf-fa-feed
+    icon(bg='dark', fg="light",text=' ∮'),  # Icon: nf-fa-feed
 
-    widget.Notify(**base(bg='color1'), padding=5, max_chars=10,default_timeout=3, action=True),
+    widget.Notify(**base(bg='dark', fg="light"), padding=5, max_chars=10,default_timeout=3, action=True),
 
 
- powerline('dark', 'color1'),
+# powerline1('color3', 'dark'),
 
 
  widget.Systray(background=colors['dark'], padding=5),
@@ -120,20 +123,20 @@ secondary_widgets = [
 
     separator(),
 
-    powerline('color1', 'color3'),
+    powerline1('light', 'dark'),
 
-    widget.CurrentLayoutIcon(**base(bg='color1'), scale=1),
+    widget.CurrentLayoutIcon(**base(bg='dark', fg='light'), scale=1),
 
-    widget.CurrentLayout(**base(bg='color1'), padding=5),
+    widget.CurrentLayout(**base(bg='dark', fg='light'), padding=5),
 
-    powerline('color2', 'color1'),
+    powerline1('light', 'dark'),
 
-    widget.Clock(**base(bg='color2'), format='%c '),
+    widget.Clock(**base(bg='dark', fg='light'), format='%c '),
 
 ]
 
 widget_defaults = {
-    'font': 'Ubuntu Mono Nerd Font',
+    'font': 'Iosevka',
     'fontsize': 17,
     'padding': 1,
 }

@@ -143,7 +143,8 @@ command! vgrep vim "+grep %a"
 command! Thunar thunar %f
 command! Code code . %f
 command! reload :write | restart full
-command! setwp feh --bg-fill %f
+command! wp feh --bg-fill %f
+command! pull git clone %a
 " ------------------------------------------------------------------------------
 
 " The file type is for the default programs to be used with
@@ -172,12 +173,11 @@ command! setwp feh --bg-fill %f
 " You can also add %CLEAR if you want to clear screen before running FUSE
 " program.
 " Pdf
-filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
+filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c, brave %c %i &
 fileviewer *.pdf
         \ vifmimg pdfpreview %px %py %pw %ph %c
         \ %pc
-        \ vifmimg clear
-        " \ pdftotext -nopgbrk %c -
+        \ vifmimg clear 
 
 " PostScript
 filextype *.ps,*.eps,*.ps.gz
@@ -215,6 +215,7 @@ filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
         \ {View using mplayer}
         \ mplayer %f,
 	\vlc %f &,
+	\mpv %f &,
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]
@@ -234,7 +235,7 @@ filextype *.html,*.htm
         \ {Open with dwb}
         \ dwb %f %i &,
         \ {Open with chrome}
-        \ google-chrome-stable %f &,
+        \ brave %f %i &,
         \ {Open with uzbl}
         \ uzbl-browser %f %i &,
 filetype *.html,*.htm links, lynx
@@ -261,8 +262,8 @@ fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.xpm,*.webp
         \ %pc
         \ vifmimg clear
 fileviewer *.gif
-        \ vifmimg gifpreview %px %py %pw %ph %c
-        \ %pc
+        \ vifmimg gifpreview %px %py %pw %ph %c 
+        \ %pc 
         \ vifmimg clear
         
 " OpenRaster

@@ -5,7 +5,7 @@ from .widgets import primary_widgets, secondary_widgets
 import subprocess
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 22, opacity=0.75)
+    return bar.Bar(widgets, 22, opacity=0.82)
 
 screens = [Screen(
        # Set Wallpaper Natively

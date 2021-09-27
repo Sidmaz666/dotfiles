@@ -76,11 +76,10 @@ mainbox {
 }
 listview {
     padding: 0em 1em 0em 1em;
-    dynamic: false;
-    columns:5;
+    dynamic: true;
+    columns:8;
     spacing: 2em;
-    lines: 7;
-    lines: 0;
+    lines: 8;
 }
 element-text {
     background-color: inherit;

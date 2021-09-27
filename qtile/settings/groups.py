@@ -2,7 +2,7 @@ from libqtile.config import Key, Group, ScratchPad, DropDown
 from libqtile.command import lazy
 from .keys import mod, keys
 groups =[Group(i) for i in [
-    " ", " ", " ", "ﳜ","  ", " ", ]]
+    " ", " ", " ", " "," ", " ", ]]
 
 for i, group in enumerate(groups):
     actual_key = str(i + 1)
@@ -15,11 +15,10 @@ for i, group in enumerate(groups):
 dropdown_conf = {
     'opacity': 0.8,
     'warp_pointer': False,
-    'height': 0.45,
-    'x' : 0,
-    'y' : -0.02,
-    'width' : 1,
-   
+    'x' : 0.255,
+    'y' : 0.20,
+    'width' : 0.51,
+    'height': 0.60 , 
 }
 
 groups.append(
@@ -37,27 +36,17 @@ groups.append(
             DropDown(
                 'htop',
                 'kitty htop',
-                height=0.60,
-                width=0.51,
-                x=0.255,
-                y=0.20,
-                opacity=0.8,
+                **dropdown_conf
             ),
             DropDown(
                 'anime',
                 'kitty /home/kurama/Documents/scripts/extra/ani-cli',
-                 x=0,
-                 y=-0.02,
-                 height=1.0190,
-                 width=0.35
+                 **dropdown_conf
             ),
              DropDown(
                 'sound',
                 'pavucontrol',
-                 x=0.649,
-                 y=-0.02,
-                 height=1.0190,
-                 width=0.35
+                **dropdown_conf
             )
         ]
     )
