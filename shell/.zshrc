@@ -408,3 +408,4 @@ alias y='yay'
 alias p='paru'
 alias mm='bpytop'
 alias cls='clear'
+alias rec="/home/$USER/Documents/scripts/extra/record.sh"
