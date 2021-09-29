@@ -72,6 +72,8 @@ def workspaces():
 primary_widgets = [
 
  widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme sm")}),
+
+
  powerline1('light','dark'),
    widget.Memory(**base(fg='light',bg='dark'), fontsize=15),
    separator(),
@@ -83,7 +85,9 @@ primary_widgets = [
 
  widget.WindowName(**base(fg='light'), fontsize=14),
 
-    powerline1('color1', 'dark'),
+
+
+ powerline1('color1', 'dark'),
 
    icon(bg="dark", fg="light", text=' '),  # Icon: nf-fa-feed
 
@@ -91,21 +95,25 @@ primary_widgets = [
 
     powerline1('color2','dark'),
 
-    widget.Battery(**base(bg='dark',fg="light"),charge_char='',unknown_char=' ',discharge_char='', format= '{char} {percent:2.0%}', padding=5),
+    widget.Battery(**base(bg='dark',fg="light"),charge_char='',unknown_char=' ',discharge_char='', format= '{char} {percent:2.0%}', update_interval=10 ,padding=5),
 
     powerline1('light','dark'),
 
+     widget.WindowCount(**base(fg='active', bg='dark'), fontsize=14, text_format='{num} ', show_zero=True),
+   
     widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.65),
 
     widget.CurrentLayout(**base(bg='dark', fg="light"), padding=5),
 
    powerline1('focus', 'dark'),
 
-    icon(bg='dark',fg="light",text='醙 '),  # Icon: nf-fa-feed
+      icon(bg='dark', fg="light",text='🔅'),  # Icon: nf-fa-feed
+    widget.Backlight(**base(bg='dark', fg="light"), padding=5, brightness_file="/sys/class/backlight/amdgpu_bl0/brightness", max_brightness_file="/sys/class/backlight/amdgpu_bl0/max_brightness"),
+
+   icon(bg='dark',fg="light",text='🔊'),  # Icon: nf-fa-feed
 
     widget.Volume(**base(bg='dark', fg="light")),
 
-    icon(bg='dark', fg="light",text=' ∮'),  # Icon: nf-fa-feed
 
     widget.Notify(**base(bg='dark', fg="light"), padding=5, max_chars=10,default_timeout=3, action=True),
 
@@ -125,6 +133,7 @@ secondary_widgets = [
 
     powerline1('light', 'dark'),
 
+
     widget.CurrentLayoutIcon(**base(bg='dark', fg='light'), scale=1),
 
     widget.CurrentLayout(**base(bg='dark', fg='light'), padding=5),
@@ -137,7 +146,7 @@ secondary_widgets = [
 
 widget_defaults = {
     'font': 'Iosevka',
-    'fontsize': 17,
+    'fontsize': 18,
     'padding': 1,
 }
 extension_defaults = widget_defaults.copy()
