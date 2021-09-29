@@ -36,5 +36,5 @@ floating_layout = layout.Floating(
         Match(title='branchdialog'),
         Match(title='pinentry'),
     ],
-    border_focus=colors["color4"][0]
+    border_focus="#ffffff"
 )

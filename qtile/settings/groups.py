@@ -7,14 +7,14 @@ groups =[Group(i) for i in [
 for i, group in enumerate(groups):
     actual_key = str(i + 1)
     keys.extend([
-        Key([mod], actual_key, lazy.group[group.name].toscreen()),
-       Key([mod, "shift"], actual_key, lazy.window.togroup(group.name)),
+        Key([mod], actual_key, lazy.group[group.name].toscreen(), desc="Change Workspaces"),
+       Key([mod, "shift"], actual_key, lazy.window.togroup(group.name), desc="Send Window to n Workspace"),
 
     ])
 
 dropdown_conf = {
     'opacity': 0.8,
-    'warp_pointer': False,
+    'warp_pointer': True,
     'x' : 0.255,
     'y' : 0.20,
     'width' : 0.51,
@@ -54,26 +54,11 @@ groups.append(
 
 keys.extend(
     [
-        Key(
-            [mod], 't',  # unmapped Caps_Lock
-            lazy.group['sp'].dropdown_toggle('term')
-        ),
-        Key(
-            [mod,"control"], 'e',
-            lazy.group['sp'].dropdown_toggle('filemanager')
-        ),
-         Key(
-            [mod], 'p',
-            lazy.group['sp'].dropdown_toggle('htop')
-        ),
-         Key(
-            [mod,"control"], 'u',
-            lazy.group['sp'].dropdown_toggle('anime')
-        ),
-             Key(
-            [mod], 's',  # pävucontrol
-            lazy.group['sp'].dropdown_toggle('sound')
-        )
+        Key([mod], 't',lazy.group['sp'].dropdown_toggle('term') ),
+        Key( [mod,"control"], 'e', lazy.group['sp'].dropdown_toggle('filemanager') ),
+         Key( [mod], 'p', lazy.group['sp'].dropdown_toggle('htop') ),
+         Key( [mod,"control"], 'u', lazy.group['sp'].dropdown_toggle('anime') ),
+             Key([mod], 's',lazy.group['sp'].dropdown_toggle('sound') )
     ]
 )
 
