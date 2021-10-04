@@ -55,9 +55,6 @@ $source | grep 'Key' | tail -n +2| \
 	-e 's/\b\(.\)/\u\1/g' \
 	-e 's/Mod/Super/g' \
 	-e 's/window/ Window /g' \
-	-e 's/Stri/[Number] /g'\
-	-e 's/Window  To  /  Send Window To /' \
-	| sed '/Fromlibqtile/,+1 d' \
        	| rofi -dmenu -theme gruvbox-dark -p " $mod"
 }
 [[ $# -eq 0 ]] &&
@@ -70,7 +67,7 @@ $source | grep 'Key' | tail -n +2| \
 	if [[ ! -z "$2" ]]; then
 	       	 source="cat $2 $3" && call && exit 
 	 else
-		souce="cat /home/.config/qtile/config.py" &&
+		souce="cat /home/$USER/.config/qtile/config.py" &&
 	       	call && exit;
 	fi
 				;;
