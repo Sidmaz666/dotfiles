@@ -110,6 +110,8 @@ Key([mod, "shift"],"g", lazy.spawn("/home/kurama/Documents/scripts/toggleBar.sh"
 
 #Key([mod, "control"],"g", lazy.spawn("killall -qe toggleBar.sh"), desc="Disable Zen Mode"),
 
+Key([mod, "shift"], "f",lazy.window.toggle_minimize(),lazy.group.next_window(),lazy.window.bring_to_front()),
+
 ]
 
 
@@ -297,7 +299,7 @@ widget.Clock(**base(bg='dark',fg="light"), format=' %b-%d~%l:%M:%S %p ', padding
 #widget.WindowName(**base(fg='light'), fontsize=14),
 #powerline1('light','dark'),
 
-widget.TaskList(**base(bg='dark', fg='light'), fontsize=15, margin=0, highlight_method="block", markup_focused="<span weight='bold' underline='low'>{}</span>", title_width_method='uniform', boderwidth=0,font="Iosevka", border='#212121', urgent_border='#000000', rounded=False, txt_floating="🗗", txt_maximized="🗖", txt_minimized="" ),
+widget.TaskList(**base(bg='dark', fg='light'), fontsize=13, margin=0, highlight_method="block", markup_focused="<span size='larger' weight='bold' underline='low'>{}</span>", title_width_method='uniform', boderwidth=0,font="Iosevka", border='#212121', urgent_border='#212121', rounded=False, txt_floating="🗗", txt_maximized="🗖", txt_minimized="" ),
 
 #widget.CPU(**base(fg='light',bg='dark'), fontsize=15, padding=1),
 #powerline1('light','dark'),
