@@ -23,7 +23,7 @@ keys = [
     Key([mod, "control"], "Down", lazy.layout.grow_down(),
         desc="Grow window down"),
     Key([mod, "control"], "Up", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod,"control"], "d", lazy.layout.normalize(), desc="Reset all window sizes"),
+  #  Key([mod,"control"], "d", lazy.layout.normalize(), desc="Reset all window sizes"),
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
     Key(["control"], "space", lazy.spawn('kitty'), desc="Launch terminal"),
@@ -56,4 +56,6 @@ Key([mod,"shift"],"r",lazy.spawn("killall -q ffmpeg"), desc="Kill FFMPEG Screen 
 Key([mod,"control"],"h",lazy.spawn("/home/kurama/Documents/scripts/spiced-macho/spiced-macho.sh"), desc="Show Man Pages as PDF in Browser"),
 Key([mod,"shift"], "k", lazy.spawn("/home/kurama/.config/qtile/scripts/qtile_kb_rofi.sh -c /home/kurama/.config/qtile/settings/keys.py /home/kurama/.config/qtile/settings/groups.py"), desc="S h o w k e y b i n d i n g s!"),
 Key([mod,"control"],"m",lazy.spawn("/home/kurama/Documents/scripts/rofi-calc.sh"), desc="Rofi Calculator"),
+Key([mod, "shift"],"g", lazy.spawn("/home/kurama/Documents/scripts/toggleBar.sh"), desc="Hide Show Bar"),
+#Key([mod, "control"],"g", lazy.spawn("killall -qe toggleBar.sh"), desc="Disable Zen Mode"),
 ]

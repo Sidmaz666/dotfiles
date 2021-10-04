@@ -1,0 +1,8 @@
+// Trim Video With FFMPEG
+
+ffmpeg -i input.mp4  -ss 00:00:00 -to 00:00:00 -c copy output.mp4    
+			[Start time]  [End Time]
+
+// Convert Video to GIF
+
+ffmpeg -i input.mp4 -vf "fps=10,scale=1200:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif

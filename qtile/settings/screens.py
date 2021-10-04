@@ -5,13 +5,16 @@ from .widgets import primary_widgets, secondary_widgets
 import subprocess
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 22, opacity=0.82)
+    return bar.Bar(widgets, 23, opacity=0.75)
+
 
 screens = [Screen(
        # Set Wallpaper Natively
        #  wallpaper='',
        #  wallpaper_mode='fill',
-        top=status_bar(primary_widgets))]
+        top=status_bar(primary_widgets),
+       # bottom=status_bar(secondary_widgets)
+        )]
 
 xrandr = "xrandr | grep -w 'connected' | cut -d ' ' -f 2 | wc -l"
 

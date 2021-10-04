@@ -16,6 +16,7 @@ Example:
 ./qtile_kb_rofi -h 	For Help
 EOF
 }
+mod="$(echo "ModKey  mod4:Super:WindowsKey")"
 call(){
 $source | grep 'Key' | tail -n +2| \
        	sed -e 's/^[ \t]*//' | \
@@ -52,7 +53,12 @@ $source | grep 'Key' | tail -n +2| \
 	-e 's/.TO / TO /g' \
 	-e 's/[A-Z]/\L&/g' \
 	-e 's/\b\(.\)/\u\1/g' \
-       	| rofi -dmenu -theme gruvbox-dark -p ""
+	-e 's/Mod/Super/g' \
+	-e 's/window/ Window /g' \
+	-e 's/Stri/[Number] /g'\
+	-e 's/Window  To  /  Send Window To /' \
+	| sed '/Fromlibqtile/,+1 d' \
+       	| rofi -dmenu -theme gruvbox-dark -p " $mod"
 }
 [[ $# -eq 0 ]] &&
 	usage && exit ||
