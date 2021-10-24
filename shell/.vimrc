@@ -1,4 +1,7 @@
 set noswapfile
+set spelllang=en_us
+setlocal spelllang=en_us
+set spell
 set encoding=utf-8
 set langmenu=en_us
 colo onedark
@@ -47,7 +50,7 @@ augroup vimrcEx
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
 augroup END
-set number
+set number relativenumber
 
 "nnoremap <C-f> :NERDTree<CR>
 nnoremap <C-f> :NERDTreeToggle<CR>
@@ -147,6 +150,9 @@ set cursorline
 " Support Italics & Italic comments
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
+" Cursors block in normal mode & line in insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 highlight Comment cterm=italic
 let g:one_allow_italics = 1
 "Indent
@@ -159,3 +165,34 @@ set shiftwidth=2
 "splits
 set splitbelow
 set splitright
+
+" ,p to only paste last yanked
+nmap ,p "0p
+nmap ,P "0P"
+" Move between windows Tab
+nmap <tab> <C-w>w
+" Y to yank line
+nnoremap Y y$ 
+"centered cursor while scrolling
+nnoremap n nzzzv
+nnoremap N Nzzzv
+" J to mark a line `z to go there
+nnoremap J mzJ`z
+" Satisfying Undo
+inoremap , ,<C-g>u
+inoremap . .<C-g>u
+inoremap ' '<C-g>u
+inoremap " "<C-g>u
+inoremap ? ?<C-g>u
+inoremap ! !<C-g>u
+" Move Lines Easily Control + j to Down and +k to up for normal & Visual Mode
+nnoremap <C-j> :m .-2<CR>==
+nnoremap <C-k> :m .+1<CR>==
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" resize Split windows S + x arrow , use s + curly brackets to scroll through
+" empty lines
+noremap <silent> <S-Right> :vertical resize +1<CR>
+noremap <silent> <S-Left> :vertical resize -1<CR>
+noremap <silent> <S-Up> :resize +1<CR>
+noremap <silent> <S-Down> :resize -1<CR>
