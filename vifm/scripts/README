@@ -4,4 +4,3 @@ scripts without specifying full path.  All subdirectories are added
 as well.  File in a subdirectory overrules file with the same name
 in parent directories.  Restart might be needed to recognize files
 in newly created or renamed subdirectories.
-#Fixed GIF preview

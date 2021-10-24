@@ -400,8 +400,8 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-alias v="vim"
-alias st="sudo ntpdate time.apple.com"
+alias v="vim -p"
+alias st="sudo ntpdate time.apple.com > /dev/null && echo Time Updated \ && date"
 alias bg="feh --bg-fill"
 alias cbg='feh --randomize --bg-fill /home/kurama/Pictures/awall/'
 alias y='yay'
@@ -409,3 +409,10 @@ alias p='paru'
 alias mm='bpytop'
 alias cls='clear'
 alias rec="/home/$USER/Documents/scripts/extra/record.sh"
+#alias servlamp="sudo systemctl enable --now httpd && sudo systemctl enable mariadb && sudo systemctl enable mysql && sudo systemctl start mariadb && sudo systemctl start mysql && sudo systemctl restart httpd"
+alias disserv="sudo systemctl stop httpd && sudo systemctl stop mariadb && sudo systemctl stop mysql"
+alias reserv="sudo systemctl restart httpd && sudo systemctl restart mariadb && sudo systemctl restart mysql "
+## Vim mode
+#bindkey -v #not that useful for me
+alias www="cd ~/Documents/http/www"
+alias mdp='mdp -xf'

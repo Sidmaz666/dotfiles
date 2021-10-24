@@ -175,9 +175,13 @@ command! pull git clone %a
 " Pdf
 filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c, brave %c %i &
 fileviewer *.pdf
-        \ vifmimg pdfpreview %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear 
+    "\ tput cup %py %px > /dev/null && mkdir -p "/tmp/%c/" && pdftoppm -jpeg -singlefile %c  "/tmp/%c/%c" > /dev/null && kitty +kitten icat --silent --transfer-mode=file  --place=%pwx%ph@%pxx%py /tmp/%c/%c.jpg
+    "\ %pc
+   " \ kitty +kitten icat --transfer-mode=file --place=%pwx%ph@%pxx%py --clear && rm -Rf /tmp/%c
+	 \ vifmimg pdfpreview %px %py %pw %ph %c 
+        \ %pc 
+        \ vifmimg clear
+
 
 " PostScript
 filextype *.ps,*.eps,*.ps.gz
@@ -209,33 +213,37 @@ filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
          \*.as[fx]
         \ {View using ffplay}
-        \ ffplay -fs -autoexit %f,
-        \ {View using Dragon}
-        \ dragon %f:p,
-        \ {View using mplayer}
-        \ mplayer %f,
-	\vlc %f &,
-	\mpv %f &,
+"""""" \ ffplay -fs -autoexit %f,
+        "\ {View using Dragon}
+        "\ dragon %f:p,
+        "\ {View using mplayer}
+        "\ mplayer %f,
+	"\vlc %f %i,
+	\mpv  %f --really-quiet -fs ,
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]
-        \ vifmimg videopreview %px %py %pw %ph %c 
-        \ %pc 
-        \ vifmimg clear
+       " \ vifmimg videopreview %px %py %pw %ph %c  && echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" &&
+	\ ffprobe %c -hide_banner > /dev/null  
+       " \ %pc 
+       " \ vifmimg clear
         " \ ffprobe -pretty %c 2>&1
-	\ mpv %f &,
-	\vlc %f &,
+	"\ mpv  --really-quiet --geometry=%px+%py+%pw %c && ffprobe  -i %c -hide_banner -v panic,
+	"\vlc %f %i ,
+	"\  tput cup %py %px > /dev/tty && mkdir -p "/tmp/%c/" && ffmpeg -y -hide_banner -loglevel panic -i %c -ss 00:00:01.000 -vframes 1 /tmp/%c/tempfile.jpg > /dev/null && kitty +kitten icat --silent --transfer-mode=file --place=%pwx%ph@%pxx%py /tmp/%c/tempfile.jpg && echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" && ffprobe %c -hide_banner > /dev/null  
+		"\ %pc 
+	"\ kitty +kitten icat --transfer-mode=file --place=%pwx%ph@%pxx%py --clear && rm -Rf /tmp/%c	
 
 " Web
 filextype *.html,*.htm
         \ {Open with emacs}
         \ emacsclient -c %c &,
         \ {Open with vim}
-        \ vim %c &,
+        \ vim %c ,
         \ {Open with dwb}
         \ dwb %f %i &,
         \ {Open with chrome}
-        \ brave %f %i &,
+        \ brave %c %i ,
         \ {Open with uzbl}
         \ uzbl-browser %f %i &,
 filetype *.html,*.htm links, lynx
@@ -248,24 +256,30 @@ filetype *.[1-8] man ./%c
 fileviewer *.[1-8] man ./%c | col -b
 
 " Images
-filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm, *webp
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.xpm, *webp
         \ {View in sxiv}
         \ sxiv -ia %f &,
         \ {View in imv}
         \ imv -b 1D2330 -d %d &,
         \ {View in feh}
-        \ feh %d &,
+        \ feh %d %i &,
         \ {View in cacaview}
         \ cacaview %c &,
+filetype *.gif
+	\ brave %c %i &,
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.xpm,*.webp
-        \ vifmimg draw %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
+	      " \ kitty icat --silent --place=%pwx%ph@%pxx%py %c
+              "\ %pc
+               "\ kitty icat --silent --clear
+		        \ vifmimg draw %px %py %pw %ph %c
+       			 \ %pc
+      			  \ vifmimg clear
+
 fileviewer *.gif
         \ vifmimg gifpreview %px %py %pw %ph %c 
         \ %pc 
         \ vifmimg clear
-        
+"        
 " OpenRaster
 filextype *.ora
         \ {Edit in MyPaint}
@@ -311,9 +325,10 @@ filetype *.zip,*.jar,*.war,*.ear,*.oxt,*.apkg
        \ FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR,
        \ {View contents}
        \ zip -sf %c | less,
+	\xarchiver %f %i &,
        \ {Extract here}
        \ tar -xf %c,
-fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
+fileviewer *.zip,*.jar,*.war,*.ear,*.oxt, zip -sf %c
 
 " ArchiveMount
 filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz
@@ -589,4 +604,4 @@ set classify+=' ::*.log::'
 set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
-
+set confirm-=delete

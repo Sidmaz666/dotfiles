@@ -29,10 +29,9 @@ if [ -e "$FIFO_UEBERZUG" ]; then
            declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
                            [x]="$2" [y]="$3" [width]="$4" [height]="$5" \
                            [path]="$frame") \
-            > "$FIFO_UEBERZUG"
-            # Sleep between frames to make the animation smooth.
-            sleep .01
-        done
+            > "$FIFO_UEBERZUG" && exit
+            # Sleep between frames to make the animation smooth. 
+        done 
 
     elif [[ "$1" == "pdfpreview" ]]; then
         echo -e "Loading preview..\nFile: $6"
