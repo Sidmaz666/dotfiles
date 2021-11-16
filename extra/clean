@@ -1,0 +1,14 @@
+#!/bin/bash
+paru -Qdt | awk '{print $1}' >> /tmp/clean.txt 
+garbage="$(echo $(cat /tmp/clean.txt))";
+if [ "$garbage" ]; then
+ read -p "Uninstall Extra Packages... $garbage? (y/n)" ree 
+ rm -Rf /tmp/clean.txt
+if [ "$ree" == "y" ]; then
+  paru -Rnsdcq $garbage 
+  else
+    echo "Didn't Remove Anything... $garbage still Exists on your System!"
+fi
+else
+echo "You Are Pure!"  
+fi

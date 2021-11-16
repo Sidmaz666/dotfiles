@@ -62,7 +62,7 @@ Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
 
 Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-Key([mod], "space", lazy.spawn('rofi -show drun -show-icons -theme sm'), desc="Spawn Rofi run launcher"),
+Key([mod], "space", lazy.spawn('rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi '), desc="Spawn Rofi run launcher"),
 
 Key([mod,"shift"],"e", lazy.spawn('rofi -show emoji -modi emoji -theme gruvbox-dark'), desc="Rofi Emoji Picker"),
 
@@ -84,7 +84,7 @@ Key([mod],"F2",lazy.spawn("killall -q SoundWireServer"), desc="SoundWire Server 
 
 Key([],"Print",lazy.spawn("flameshot gui"), desc="Screenshot Utility"),
 
-Key([mod],"e",lazy.spawn("kitty .config/vifm/scripts/vifmrun"), desc="Terminal File Manager" ),
+Key([mod],"e",lazy.spawn("kitty /home/kurama/.config/vifm/scripts/vifmrun"), desc="Terminal File Manager" ),
 
 Key([mod],"f",lazy.spawn("thunar"), desc="GUI File Manager"),
 
@@ -110,8 +110,13 @@ Key([mod, "shift"],"g", lazy.spawn("/home/kurama/Documents/scripts/toggleBar.sh"
 
 #Key([mod, "control"],"g", lazy.spawn("killall -qe toggleBar.sh"), desc="Disable Zen Mode"),
 
-Key([mod, "shift"], "f",lazy.window.toggle_minimize(),lazy.group.next_window(),lazy.window.bring_to_front()),
+Key([mod, "shift"], "f",lazy.window.toggle_minimize(),lazy.group.next_window(),lazy.window.bring_to_front(), desc="Toggle Between Floating Windows"),
 
+Key([mod,"shift"], "p", lazy.spawn("/home/kurama/.config/rofi/applets/applets/powermenu.sh"), desc="Show Power Menu"),
+
+Key([ "control"],"g", lazy.spawn("/home/kurama/Documents/scripts/rofi-color-picker/rofi-color-picker/rofi-color-picker -o '-theme Monokai'"), desc="Show Color Picker"),
+
+Key([ "control"],"i", lazy.spawn("/home/kurama/Documents/scripts/rofi-nerdfonts/rofi-nerdfonts.sh"), desc="Show Nerd Fonts Bar"),
 ]
 
 
@@ -138,7 +143,8 @@ colors= dict(
     color1=  "#b8b814",
     color2= "#eb4747",
     color3= "#39ac39",
-    color4= "#c639a3" )
+    color4= "#c639a3"
+    )
 
 ####LAYOUTS####
 
@@ -226,14 +232,15 @@ def workspaces():
             active=colors['color3'],
             inactive=colors['light'],
             rounded=False,
+            disable_drag=False,
             highlight_method='block',
             urgent_alert_method='block',
-            urgent_border=colors['color2'],
+            urgent_border=colors['text'],
             this_current_screen_border=colors['text'],
             this_screen_border=colors['dark'],
             other_current_screen_border=colors['dark'],
             other_screen_border=colors['dark'],
-            disable_drag=False),]
+            ),]
 
 #secondary_widgets = [
 #*workspaces(),
@@ -277,7 +284,7 @@ screens = [Screen(
 
 top=bar.Bar([
 
- widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme sm")}),
+ widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi ")}),
 
 *workspaces(),
  
@@ -364,7 +371,7 @@ widget.Systray(background=colors['dark'], padding=5),
 
 ##DECLARING-GROUP##NERD-FONTS##
 
-groups =[Group(i) for i in [ " ", " ", " ", " "," ", " ", ]]
+groups =[Group(i) for i in [ "" , "", "", "", "", "", ]]
 
 ##GROUP-SWITCH-KEYBINDING##
 ##GROUP-KB##

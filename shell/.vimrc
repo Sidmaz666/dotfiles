@@ -55,7 +55,7 @@ set number relativenumber
 "nnoremap <C-f> :NERDTree<CR>
 nnoremap <C-f> :NERDTreeToggle<CR>
 
-let g:user_emmet_mode='n'    "only enable normal mode functions.
+let g:user_emmet_mode='n'    "only enable in normal mode.
 
 let g:user_emmet_leader_key=","
 
@@ -81,13 +81,14 @@ let g:user_emmet_settings = {
 \}
 
 "Dictionary
-"inoremap <c-l> <c-x><c-k>
+inoremap <c-l> <c-x><c-k>
 "Omni Complete
 inoremap <C-O> <C-X><C-O>
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 set clipboard=unamedplus
-set dictionary+=/home/kurama/Documents/scripts/extra/dic.txt
+"set dictionary+=/home/kurama/Documents/scripts/extra/dic.txt
+set dictionary+=/usr/share/dict/cracklib-small
 set complete+=k
 set completeopt=longest,menu
 set shortmess+=c
@@ -113,15 +114,7 @@ set pumheight=10
 
 "let g:jedi#popup_on_dot = 0
 
-let g:deoplete#enable_at_startup = 1"
-
-" Trigger configuration. Do not use <tab> if you use YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<S-tab>"
-let g:UltiSnipsJumpForwardTrigger="<S-tab>"
-"let g:	UltiSnipsExpandTrigger
-let g:UltiSnipsJumpBackwardTrigger="<S-p>"
-let g:UltiSnipsSnippetDirectories = ['UltiSnips']
-" Add optional packages.
+"let g:deoplete#enable_at_startup = 1"
 " 
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
@@ -131,6 +124,7 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 "Airline Configurations
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -149,7 +143,7 @@ let g:floaterm_keymap_toggle = '<S-t>'
 set cursorline
 " Support Italics & Italic comments
 let &t_ZH="\e[3m"
-let &t_ZR="\e[23m"
+let &t_ZR="\e[23m" 
 " Cursors block in normal mode & line in insert mode
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
@@ -186,13 +180,133 @@ inoremap " "<C-g>u
 inoremap ? ?<C-g>u
 inoremap ! !<C-g>u
 " Move Lines Easily Control + j to Down and +k to up for normal & Visual Mode
-nnoremap <C-j> :m .-2<CR>==
-nnoremap <C-k> :m .+1<CR>==
+"nnoremap <C-j> :m .-2<CR>==
+"nnoremap <C-k> :m .+1<CR>==
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 " resize Split windows S + x arrow , use s + curly brackets to scroll through
-" empty lines
+" empty lines 
 noremap <silent> <S-Right> :vertical resize +1<CR>
 noremap <silent> <S-Left> :vertical resize -1<CR>
 noremap <silent> <S-Up> :resize +1<CR>
 noremap <silent> <S-Down> :resize -1<CR>
+"FZF
+"let g:fzf_preview_window = []
+let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
+"let g:fzf_layout = { 'down' :'35%' }
+noremap <C-s> :Files <CR>
+noremap <S-b> :Buffers<CR>
+"COC CONFIG
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+"Pretty
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"DOC
+
+command! -nargs=0 Format :call CocAction('format')
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nnoremap <silent> D :call <SID>show_documentation()<CR>
+
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+  function FindCursorPopUp()
+     let radius = get(a:000, 0, 2)
+     let srow = screenrow()
+     let scol = screencol()
+     " it's necessary to test entire rect, as some popup might be quite small
+     for r in range(srow - radius, srow + radius)
+       for c in range(scol - radius, scol + radius)
+         let winid = popup_locate(r, c)
+         if winid != 0
+           return winid
+         endif
+       endfor
+     endfor
+
+     return 0
+   endfunction
+
+   function ScrollPopUp(down)
+     let winid = FindCursorPopUp()
+     if winid == 0
+       return 0
+     endif
+
+     let pp = popup_getpos(winid)
+     call popup_setoptions( winid,
+           \ {'firstline' : pp.firstline + ( a:down ? 1 : -1 ) } )
+
+     return 1
+   endfunction
+nnoremap <expr> <c-d> ScrollPopUp(1) ? '<esc>' : '<c-d>'
+nnoremap <expr> <c-u> ScrollPopUp(0) ? '<esc>' : '<c-u>'
+
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.js,*.tsx,*sh'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.xml,*jsx,*.js,*.tsx'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml,txt,sh,jsx,js,tsx,xml'
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,xml,js,tsx'
+
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \ }
+
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+
+" csttt change surround tag to a tag
+" cs"' change \" \ to ' cs \' \" to \' \" 
+" ysiwt add a new surrounding tag
+"indent tab lines
+"set list lcs=tab:\┆\ 
+" % key to bounce between tags
+" vi("x") select all inside vat select all around ("y")
