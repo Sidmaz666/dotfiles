@@ -1,0 +1,57 @@
+#!/bin/bash
+# Complie and show output in terminal
+if [ -z "$1" ]; then
+  echo "Please Pass a C File" && exit 
+else
+  input_c_file=$1
+  c_output_file="$(echo $1 | sed -e 's/.c//')"
+  compile_input_file="$(gcc "$input_c_file" -o "$c_output_file")"
+  if [ -z "$compile_input_file" ]; then
+    STATUS="Successfull"
+    echo "
+
+---------------------------------------------------------------
+    
+>>  Status: $STATUS   
+>>  Executable: $PWD/$c_output_file
+    
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+                    ~ OUTPUT BELOW! ~
+    
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+"
+    ./$c_output_file
+    
+    echo "
+
+----------------------------------------------------------------
+
+"
+    read -p "Delete the Compiled $c_output_file File! (y/n)" yn
+    if [ "$yn" = "y" ]; then
+    rm -Rf $c_output_file
+    echo "
+----------------------------------------------------------------
+----------------------------------------------------------------
+    
+>>  $c_output_file Deleted Permanently From $PWD
+    
+----------------------------------------------------------------
+----------------------------------------------------------------
+    "
+    fi
+else
+  STATUS="Something Went Wrong While Compiling!"
+
+echo "
+
+---------------------------------------------------------------
+    
+>>  Status: $STATUS   
+>>  Executable: $PWD/$c_output_file
+    
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"
+  fi
+  fi
