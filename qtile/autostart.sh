@@ -1,9 +1,10 @@
 #!/bin/sh
-/home/$USER/.config/qtile/scripts/feh-rnd-wall.sh &
-/home/$USER/.config/qtile/scripts/auto_bar_switch_layout.sh &
+#/home/$USER/.config/qtile/scripts/feh-rnd-wall.sh &
+notify-send 'Status' "Logged-In" --icon=/home/kurama/.config/qtile/icons/menu.png -t 3000 &
 lxsession -e qtile -s qtile  &
-picom &
+#pulseaudio --start || pulseaudio --k && pulseaudio --start &
 volumeicon &
 flameshot &
 copyq &
-xidlehook --not-when-audio --not-when-fullscreen --timer 300 "systemctl suspend" '' &
+xidlehook --not-when-audio --not-when-fullscreen --timer 120 'betterlockscreen -l dimblur 1' '' --timer 300 'systemctl suspend' '' &
+picom &

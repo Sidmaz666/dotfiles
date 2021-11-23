@@ -86,8 +86,8 @@ inoremap <c-l> <c-x><c-k>
 inoremap <C-O> <C-X><C-O>
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
-set clipboard=unamedplus
 "set dictionary+=/home/kurama/Documents/scripts/extra/dic.txt
+set clipboard=unamedplus
 set dictionary+=/usr/share/dict/cracklib-small
 set complete+=k
 set completeopt=longest,menu
@@ -310,3 +310,11 @@ let g:closetag_close_shortcut = '<leader>>'
 "set list lcs=tab:\┆\ 
 " % key to bounce between tags
 " vi("x") select all inside vat select all around ("y")
+" Ctrl+c, vim To System Clipboard 
+vnoremap <C-c> :!xclip -f -sel clip <CR>
+" q and tab to escape
+imap q<Tab> <Esc>
+" s amd tab to write/save file
+map s<Tab> :w  <CR>
+"Q to quit vim
+nmap Q :q <CR>

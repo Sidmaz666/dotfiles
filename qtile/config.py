@@ -78,9 +78,9 @@ Key([mod,"shift"], "a", lazy.spawn("brightnessctl set +10%"), desc="Increase Bri
 
 Key([mod, "shift"], "d",lazy.spawn("brightnessctl set 10%-"), desc="Decrease Brightness"),
 
-Key([mod],"F1",lazy.spawn("SoundWireServer -nogui")),
+Key([mod],"F1",lazy.spawn("SoundWireServer -nogui"), desc="Start SoundWireServer"),
 
-Key([mod],"F2",lazy.spawn("killall -q SoundWireServer"), desc="SoundWire Server Start"),
+Key([mod],"F2",lazy.spawn("killall -q SoundWireServer"), desc="Kill SoundWire Server"),
 
 Key([],"Print",lazy.spawn("flameshot gui"), desc="Screenshot Utility"),
 
@@ -94,7 +94,7 @@ Key([mod,"control"],"p",lazy.spawn("killall -q picom"), desc="Kill Compositor"),
 
 Key([],"F3", lazy.spawn("picom"), desc="Start Compositor"),
 
-Key([mod],"l",lazy.spawn("betterlockscreen -l"), desc="Lock Screen"),
+Key([mod],"l",lazy.spawn("betterlockscreen -l dim 200 "), desc="Lock Screen"),
 
 Key([mod,"control"],"d",lazy.spawn("sh /home/kurama/.config/qtile/scripts/cbg.sh"), desc="Change Background"),
 
@@ -117,6 +117,8 @@ Key([mod,"shift"], "p", lazy.spawn("/home/kurama/.config/rofi/applets/applets/po
 Key([ "control"],"g", lazy.spawn("/home/kurama/Documents/scripts/rofi-color-picker/rofi-color-picker/rofi-color-picker -o '-theme Monokai'"), desc="Show Color Picker"),
 
 Key([ "control"],"i", lazy.spawn("/home/kurama/Documents/scripts/rofi-nerdfonts/rofi-nerdfonts.sh"), desc="Show Nerd Fonts Bar"),
+
+Key([mod, "control"], "w",lazy.spawn("killall -q wineserver"), desc="Kill All Windows Applications/Games"),
 ]
 
 
@@ -223,20 +225,20 @@ def workspaces():
         widget.GroupBox(
             **base(fg='light'),
             font='UbuntuMono Nerd Font',
-            fontsize=19,
+            fontsize=17,
             margin_y=3,
             margin_x=0,
             padding_y=8,
             padding_x=5,
-            borderwidth=1,
+            borderwidth=2.5,
             active=colors['color3'],
             inactive=colors['light'],
             rounded=False,
             disable_drag=False,
-            highlight_method='block',
+            highlight_method='line',
             urgent_alert_method='block',
             urgent_border=colors['text'],
-            this_current_screen_border=colors['text'],
+            this_current_screen_border=colors['light'],
             this_screen_border=colors['dark'],
             other_current_screen_border=colors['dark'],
             other_screen_border=colors['dark'],
@@ -279,8 +281,8 @@ extension_defaults = widget_defaults.copy()
 
 screens = [Screen(
 # Set Wallpaper Natively
-#  wallpaper='',
-#  wallpaper_mode='fill',
+ wallpaper='/home/kurama/Pictures/awall/walll.jpg',
+ wallpaper_mode='stretch',
 
 top=bar.Bar([
 
@@ -343,35 +345,35 @@ powerline('light','dark'),
 # powerline('color3', 'dark'),
 
 widget.Systray(background=colors['dark'], padding=5),
-], 23, opacity=0.75 ))]
+], 24, opacity=0.72 ))]
 
 #bottom=status_bar(secondary_widgets))]
 
 ##FORMULTIPLE-MONITORS##
 
-#xrandr = "xrandr | grep -w 'connected' | cut -d ' ' -f 2 | wc -l"
+xrandr = "xrandr | grep -w 'connected' | cut -d ' ' -f 2 | wc -l"
 
-#command = subprocess.run(
-#xrandr,
-#shell=True,
-#stdout=subprocess.PIPE,
-#stderr=subprocess.PIPE,
-#)
+command = subprocess.run(
+xrandr,
+shell=True,
+stdout=subprocess.PIPE,
+stderr=subprocess.PIPE,
+)
 
-#if command.returncode != 0:
-#    error = command.stderr.decode("UTF-8")
-#    logger.error(f"Failed counting monitors using {xrandr}:\n{error}")
-#    connected_monitors = 1
-#else:
-#    connected_monitors = int(command.stdout.decode("UTF-8"))
-#
+if command.returncode != 0:
+    error = command.stderr.decode("UTF-8")
+    logger.error(f"Failed counting monitors using {xrandr}:\n{error}")
+    connected_monitors = 1
+else:
+    connected_monitors = int(command.stdout.decode("UTF-8"))
+
 #if connected_monitors > 1:
 #    for _ in range(1, connected_monitors):
 #        screens.append(Screen(top=status_bar(secondary_widgets)))
 
 ##DECLARING-GROUP##NERD-FONTS##
 
-groups =[Group(i) for i in [ "" , "", "", "", "", "", ]]
+groups =[Group(i) for i in [ "Ä", "β" , "ξ", "δ", "ε", "φ" ]]
 
 ##GROUP-SWITCH-KEYBINDING##
 ##GROUP-KB##
