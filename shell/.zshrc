@@ -2,10 +2,10 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-
 #/home/kurama/Documents/scripts/rwwyoyt-main/rw-simp.sh
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+ neofetch
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 export PF_INFO="ascii kernel uptime memory"
@@ -221,7 +221,6 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 
 #switch between lightdm and sddm
 alias tolightdm="sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings --noconfirm --needed ; sudo systemctl enable lightdm.service -f ; echo 'Lightm is active - reboot now'"
-alias tosddm="sudo pacman -S sddm --noconfirm --needed ; sudo systemctl enable sddm.service -f ; echo 'Sddm is active - reboot now'"
 
 #quickly kill conkies
 alias kc='killall conky'
@@ -331,6 +330,10 @@ alias sysfailed="systemctl list-units --failed"
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 
+# ytfzf --detach everytime from terminal
+
+alias ytfzf="ytfzf --detach"
+alias ytsub="ytfzf -S --sort" 
 #update betterlockscreen images
 alias bls="betterlockscreen -u /usr/share/backgrounds/arcolinux/"
 
@@ -415,7 +418,7 @@ alias reserv="sudo systemctl restart httpd && sudo systemctl restart mariadb && 
 #bindkey -v #not that useful for me
 alias www="cd ~/Documents/http/www"
 alias mdp='mdp -xf'
-alias serv='sudo live-server'
+alias serv='live-server ~/Documents/http/www'
 alias startserv='sudo systemctl enable httpd && sudo systemctl enable mariadb && sudo systemctl enable mysql'
 alias killserv='sudo systemctl disable httpd && sudo systemctl disable mariadb && sudo systemctl disable mysql'
 # this is what matters
@@ -823,3 +826,4 @@ bindkey '^I' fzf-completion
   eval $__fzf_completion_options
   'unset' '__fzf_completion_options'
 }
+alias rs='xrandr -s 1920x1080'

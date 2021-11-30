@@ -205,7 +205,7 @@ auto_caption=1
 
 #sort videos, history, and subscriptions by date from newest to oldest
 #same as --sort
-sort_videos_data=1
+sort_videos_data=0
 
 #the tab of trending to select when scrape is trending
 #options are: music, gaming, movies, ""
