@@ -70,13 +70,13 @@ Key([mod], "b",lazy.spawn('brave'),desc="Browser"),
 
 Key([mod],"v",lazy.spawn('copyq menu'), desc="Clipboard popup"),
 
-Key([mod,"control"], "j", lazy.spawn( "pactl set-sink-volume @DEFAULT_SINK@ -5%"), desc="Volume Down"),
+Key([mod,"control"], "j", lazy.spawn( "/home/kurama/.config/qtile/scripts/soundd.sh"), desc="Volume Down"),
       
-Key([mod,"control"], "k",lazy.spawn( "pactl set-sink-volume @DEFAULT_SINK@ +5%"), desc="Volume Up"),
+Key([mod,"control"], "k",lazy.spawn("/home/kurama/.config/qtile/scripts/soundi.sh"), desc="Volume Up"),
      
-Key([mod,"shift"], "a", lazy.spawn("brightnessctl set +10%"), desc="Increase Brightness"),
+Key([mod,"shift"], "a", lazy.spawn("/home/kurama/.config/qtile/scripts/brgti.sh"), desc="Increase Brightness"),
 
-Key([mod, "shift"], "d",lazy.spawn("brightnessctl set 10%-"), desc="Decrease Brightness"),
+Key([mod, "shift"], "d",lazy.spawn("/home/kurama/.config/qtile/scripts/brgtd.sh"), desc="Decrease Brightness"),
 
 Key([mod],"F1",lazy.spawn("SoundWireServer -nogui"), desc="Start SoundWireServer"),
 
@@ -119,6 +119,9 @@ Key([ "control"],"g", lazy.spawn("/home/kurama/Documents/scripts/rofi-color-pick
 Key([ "control"],"i", lazy.spawn("/home/kurama/Documents/scripts/rofi-nerdfonts/rofi-nerdfonts.sh"), desc="Show Nerd Fonts Bar"),
 
 Key([mod, "control"], "w",lazy.spawn("killall -q wineserver"), desc="Kill All Windows Applications/Games"),
+
+Key([mod], "F3",lazy.spawn("killall -q mpv"), desc="Kill all Music/Videos MPV"),
+
 ]
 
 
@@ -145,7 +148,8 @@ colors= dict(
     color1=  "#b8b814",
     color2= "#eb4747",
     color3= "#39ac39",
-    color4= "#c639a3"
+    color4= "#c639a3",
+    color5= "#EC407A"
     )
 
 ####LAYOUTS####
@@ -206,8 +210,8 @@ def powerline(fg="light", bg="dark"):
         **base(fg, bg),
        # text="\u25E2",
        text="❮",
-        fontsize=23,
-        padding=3
+        fontsize=31,
+        padding=5
     )
 
 def powerline1(fg="light", bg="dark"):
@@ -215,8 +219,8 @@ def powerline1(fg="light", bg="dark"):
         **base(fg, bg),
        # text="\u25E4",
        text= " ❯",
-        fontsize=23,
-        padding=3
+        fontsize=31,
+        padding=5
     )
 
 def workspaces():
@@ -225,13 +229,13 @@ def workspaces():
         widget.GroupBox(
             **base(fg='light'),
             font='UbuntuMono Nerd Font',
-            fontsize=17,
+            fontsize=20,
             margin_y=3,
             margin_x=0,
-            padding_y=8,
-            padding_x=5,
+            padding_y=0,
+            padding_x=10,
             borderwidth=2.5,
-            active=colors['color3'],
+            active=colors['color5'],
             inactive=colors['light'],
             rounded=False,
             disable_drag=False,
@@ -286,11 +290,11 @@ screens = [Screen(
 
 top=bar.Bar([
 
- widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/menu.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi ")}),
+ widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/winmen.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi ")}),
 
 *workspaces(),
  
-widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.75), widget.WindowCount(**base(fg='light', bg='dark'), fontsize=14, text_format='[{num}]', show_zero=True, padding=1),
+widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.60), widget.WindowCount(**base(fg='light', bg='dark'), fontsize=14, text_format='[{num}]', show_zero=True, padding=1),
 
 powerline1('light','dark'),
 
@@ -345,7 +349,7 @@ powerline('light','dark'),
 # powerline('color3', 'dark'),
 
 widget.Systray(background=colors['dark'], padding=5),
-], 24, opacity=0.72 ))]
+], 30, opacity=0.72 ))]
 
 #bottom=status_bar(secondary_widgets))]
 
@@ -372,8 +376,9 @@ else:
 #        screens.append(Screen(top=status_bar(secondary_widgets)))
 
 ##DECLARING-GROUP##NERD-FONTS##
-
-groups =[Group(i) for i in [ "Ä", "β" , "ξ", "δ", "ε", "φ" ]]
+groups =[Group(i) for i in [ 
+" "," "," ", " ", " ", " "
+]]
 
 ##GROUP-SWITCH-KEYBINDING##
 ##GROUP-KB##
@@ -417,7 +422,7 @@ groups.append(
             ),
             DropDown(
                 'anime',
-                'kitty /home/kurama/Documents/scripts/extra/ani-cli',
+                'kitty ani-cli',
                  **dropdown_conf
             ),
              DropDown(

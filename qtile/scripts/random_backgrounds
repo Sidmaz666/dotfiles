@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# cp -r random_backgrounds /usr/bin/ 
 [[ -z "$1" ]] && time=900 || time=$1
 notify-send "Wallpaper will change in $time seconds" &
 while true; do

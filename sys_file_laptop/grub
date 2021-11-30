@@ -3,7 +3,7 @@
 GRUB_DEFAULT="saved"
 GRUB_SAVEDEFAULT="true"
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=UUID=4277251c-e5d1-4961-a008-45da57b863a3 loglevel=3  rd.udev.log_priority=3 splash vt.global_cursor_default=0 amdgpu.noretry=0 audit=0 idle=nomwait iommu=soft amd_iommu=off  amdgpu.dc=1"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=UUID=4277251c-e5d1-4961-a008-45da57b863a3 loglevel=3  rd.udev.log_priority=3 splash vt.global_cursor_default=0 amdgpu.noretry=0 audit=0 idle=nomwait amdgpu.dc=1"
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
