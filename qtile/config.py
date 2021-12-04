@@ -62,7 +62,7 @@ Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
 
 Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-Key([mod], "space", lazy.spawn('rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi '), desc="Spawn Rofi run launcher"),
+Key([mod], "space", lazy.spawn('rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/misc/blurry.rasi'), desc="Spawn Rofi run launcher"),
 
 Key([mod,"shift"],"e", lazy.spawn('rofi -show emoji -modi emoji -theme gruvbox-dark'), desc="Rofi Emoji Picker"),
 
@@ -290,7 +290,7 @@ screens = [Screen(
 
 top=bar.Bar([
 
- widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/winmen.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/colorful/style_7.rasi ")}),
+ widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/winmen.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/misc/blurry.rasi")}),
 
 *workspaces(),
  
