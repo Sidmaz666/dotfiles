@@ -1,4 +1,4 @@
-## Live Wallpapers using Feh
+## Live Wallpapers, Animated Wallpapers using Feh
 ## Convert GIFs or Video to png's
 ### Use convert -verbose -coalesce input.gif output.png 
 
