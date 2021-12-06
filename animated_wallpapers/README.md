@@ -1,6 +1,8 @@
 ## Live Wallpapers, Animated Wallpapers using Feh
 ## Convert GIFs or Video to png's
-### Use convert -verbose -coalesce input.gif output.png 
+#### Use the following command to extract all the frames from a gif
+
+convert -verbose -coalesce input.gif output.png  
 
 ![preview](https://github.com/Sidmaz666/dotfiles/blob/main/animated_wallpapers/preview.gif?raw=true)
 
