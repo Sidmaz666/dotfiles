@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-[[ -z "$1" ]] && time=900 || time=$1
-notify-send "Wallpaper will change in $time seconds" &
-while true; do
-  feh --randomize --bg-fill /home/$USER/Pictures/awall/ 
-  sleep $time 
-done
-
-

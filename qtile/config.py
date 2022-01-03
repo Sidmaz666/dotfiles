@@ -1,20 +1,50 @@
-####IMPORTING-QTILE-LIBRARIES####
-##GROUPS-KEYS-LAYOUTS-SCREEN-MOUSE##
-
 import os
 import re
 import subprocess
 import json
 
-from libqtile import qtile
-from typing import List 
-from libqtile.config import Key, Group, ScratchPad, DropDown, Key, Drag, Click, Screen, Match
+from typing import List  # noqa: F401
+
+from libqtile import bar, layout, widget, hook
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
-from libqtile import layout, bar, widget, hook
 
-####KEYS-START####
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
 
-##SUPER/WINDOWS-KEY##
+####THEME####
+##COLORS##
+colors= dict(
+    dark= "#212121",
+    grey= "#353c4a",
+    light= "#f1ffff",
+    white= "#FFFFFF",
+    text= "#0f101a",
+    active= "#baf7e8",
+    inactive= "#4c566a",
+    lightgrey="#6f6f6f"
+    )
+
+####WIDGETS####
+
+def base(fg='text', bg='dark'):
+    return {
+        'foreground': colors[fg],
+        'background': colors[bg]
+    }
+
+def separator():
+    return widget.Sep(**base(), linewidth=0, padding=5)
+
+def icon(fg='text', bg='dark', fontsize=16, text="?"):
+    return widget.TextBox(
+        **base(fg, bg),
+        fontsize=fontsize,
+        text=text,
+        padding=0
+    )
 
 mod = "mod4"
 
@@ -46,8 +76,6 @@ Key([mod, "control"], "Down", lazy.layout.grow_down(), desc="Grow window down"),
 
 Key([mod, "control"], "Up", lazy.layout.grow_up(), desc="Grow window up"),
 
-## Key([mod,"control"], "d", lazy.layout.normalize(), desc="Reset all window sizes"),
-
 Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
 
 Key(["control"], "space", lazy.spawn('kitty'), desc="Launch terminal"),
@@ -62,7 +90,7 @@ Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
 
 Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-Key([mod], "space", lazy.spawn('rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/misc/blurry.rasi'), desc="Spawn Rofi run launcher"),
+Key([mod], "space", lazy.spawn('rofi -show drun -modi drun,window,run -show-icons -theme dmenu'), desc="Spawn Rofi run launcher"),
 
 Key([mod,"shift"],"e", lazy.spawn('rofi -show emoji -modi emoji -theme gruvbox-dark'), desc="Rofi Emoji Picker"),
 
@@ -70,21 +98,17 @@ Key([mod], "b",lazy.spawn('brave'),desc="Browser"),
 
 Key([mod],"v",lazy.spawn('copyq menu'), desc="Clipboard popup"),
 
-Key([mod,"control"], "j", lazy.spawn( "/home/kurama/.config/qtile/scripts/soundd.sh"), desc="Volume Down"),
+Key([mod,"control"], "j", lazy.spawn( "/home/random/.config/qtile/scripts/soundd.sh"), desc="Volume Down"),
       
-Key([mod,"control"], "k",lazy.spawn("/home/kurama/.config/qtile/scripts/soundi.sh"), desc="Volume Up"),
+Key([mod,"control"], "k",lazy.spawn("/home/random/.config/qtile/scripts/soundi.sh"), desc="Volume Up"),
      
-Key([mod,"shift"], "a", lazy.spawn("/home/kurama/.config/qtile/scripts/brgti.sh"), desc="Increase Brightness"),
+Key([mod,"shift"], "a", lazy.spawn("/home/random/.config/qtile/scripts/brgti.sh"), desc="Increase Brightness"),
 
-Key([mod, "shift"], "d",lazy.spawn("/home/kurama/.config/qtile/scripts/brgtd.sh"), desc="Decrease Brightness"),
-
-Key([mod],"F1",lazy.spawn("SoundWireServer -nogui"), desc="Start SoundWireServer"),
-
-Key([mod],"F2",lazy.spawn("killall -q SoundWireServer"), desc="Kill SoundWire Server"),
+Key([mod, "shift"], "d",lazy.spawn("/home/random/.config/qtile/scripts/brgtd.sh"), desc="Decrease Brightness"),
 
 Key([],"Print",lazy.spawn("flameshot gui"), desc="Screenshot Utility"),
 
-Key([mod],"e",lazy.spawn("kitty /home/kurama/.config/vifm/scripts/vifmrun"), desc="Terminal File Manager" ),
+Key([mod],"e",lazy.spawn("kitty /home/random/.config/vifm/scripts/vifmrun"), desc="Terminal File Manager" ),
 
 Key([mod],"f",lazy.spawn("thunar"), desc="GUI File Manager"),
 
@@ -96,288 +120,31 @@ Key([],"F3", lazy.spawn("picom"), desc="Start Compositor"),
 
 Key([mod],"l",lazy.spawn("betterlockscreen -l dim 200 "), desc="Lock Screen"),
 
-Key([mod,"control"],"d",lazy.spawn("sh /home/kurama/.config/qtile/scripts/cbg.sh"), desc="Change Background"),
-
 Key([mod,"shift"],"r",lazy.spawn("killall -q ffmpeg"), desc="Kill FFMPEG Screen Recording"),
 
-Key([mod,"control"],"h",lazy.spawn("/home/kurama/Documents/scripts/spiced-macho/spiced-macho.sh"), desc="Show Man Pages as PDF in Browser"),
+Key([mod,"control"],"m",lazy.spawn("/home/random/Documents/scripts/rofi-calc.sh"), desc="Rofi Calculator"),
 
-Key([mod,"shift"], "k", lazy.spawn("/home/kurama/.config/qtile/scripts/qtile_kb_rofi.sh -c /home/kurama/.config/qtile/config.py"), desc="S h o w k e y b i n d i n g s!"),
-
-Key([mod,"control"],"m",lazy.spawn("/home/kurama/Documents/scripts/rofi-calc.sh"), desc="Rofi Calculator"),
-
-Key([mod, "shift"],"g", lazy.spawn("/home/kurama/Documents/scripts/toggleBar.sh"), desc="Hide Show Bar"),
-
-#Key([mod, "control"],"g", lazy.spawn("killall -qe toggleBar.sh"), desc="Disable Zen Mode"),
+Key([mod, "shift"],"g", lazy.spawn("qtile cmd-obj -o cmd -f hide_show_bar -a top"), desc="Hide Show Bar"),
 
 Key([mod, "shift"], "f",lazy.window.toggle_minimize(),lazy.group.next_window(),lazy.window.bring_to_front(), desc="Toggle Between Floating Windows"),
 
-Key([mod,"shift"], "p", lazy.spawn("/home/kurama/.config/rofi/applets/applets/powermenu.sh"), desc="Show Power Menu"),
+Key([mod,"shift"], "z", lazy.spawn("/home/random/.config/rofi/applets/android/powermenu.sh"), desc="Show Power Menu"),
 
-Key([ "control"],"g", lazy.spawn("/home/kurama/Documents/scripts/rofi-color-picker/rofi-color-picker/rofi-color-picker -o '-theme Monokai'"), desc="Show Color Picker"),
+Key([mod,"control"],"g", lazy.spawn("/home/random/Documents/scripts/rofi-color-picker/rofi-color-picker/rofi-color-picker"), desc="Show Color Picker"),
 
-Key([ "control"],"i", lazy.spawn("/home/kurama/Documents/scripts/rofi-nerdfonts/rofi-nerdfonts.sh"), desc="Show Nerd Fonts Bar"),
+Key([mod,"control"],"i", lazy.spawn("/home/random/Documents/scripts/rofi-fontawesome/fontawesome-menu/fontawesome-menu -f /home/random/Documents/scripts/rofi-fontawesome/unicode-list.txt -o '-theme gruvbox-dark'"), desc="Show Icons"),
 
-Key([mod, "control"], "w",lazy.spawn("killall -q wineserver"), desc="Kill All Windows Applications/Games"),
+Key([mod], "F3", lazy.spawn("killall -q mpv"), desc="Kill all Music/Videos MPV"),
 
-Key([mod], "F3",lazy.spawn("killall -q mpv"), desc="Kill all Music/Videos MPV"),
+Key([mod,"shift"], "n", lazy.spawn("/home/random/Documents/scripts/notflix/notflix "), desc="Notflix Fuck Netflix"),
+
+Key([mod,"control"], "t", lazy.spawn("brave --app='https://www.monkeytype.com'"), desc="MonkeyTyping Practice"),
 
 ]
-
-
-####STARTUP-HOOK####
-
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
-
-####START-GROUPS#####
-
-####THEME####
-##COLORS##
-colors= dict(
-    dark= "#212121",
-    grey= "#353c4a",
-    light= "#f1ffff",
-    text= "#0f101a",
-    focus= "#a151d3",
-    active= "#baf7e8",
-    inactive= "#4c566a",
-    urgent=  "#F07178",
-    color1=  "#b8b814",
-    color2= "#eb4747",
-    color3= "#39ac39",
-    color4= "#c639a3",
-    color5= "#EC407A"
-    )
-
-####LAYOUTS####
-
-##LAYOUT-COLOR-WINDOW-DECORATION##
-
-layout_conf = {
-    'border_focus':"#ffffff",
-    'border_width': 2,
-    'border_normal': "#666666",
-    'margin': 5
-}
-
-##ACTIVE-LAYOUTS##
-
-layouts = [
-
-layout.Columns(**layout_conf),
-layout.Max(),
-
-#layout.Max(),
-#layout.MonadTall(**layout_conf),
-#layout.MonadWide(**layout_conf),
-#layout.Bsp(**layout_conf),
-#layout.Matrix(columns=2, **layout_conf),
-#layout.RatioTile(**layout_conf),
-#layout.Tile(**layout_conf),
-#layout.TreeTab(sections=[""], section_top=0, panel_width=35),
-#layout.VerticalTile(**layout_conf),
-#layout.Zoomy(columnwidth=50, margin=0, property_big='1.0', property_name='ZOOM',property_small='0.1'),
-]
-####SCREENS####
-
-#def status_bar(widgets):
-#    return bar.Bar(widgets, 23, opacity=0.75)
-
-####WIDGETS####
-
-def base(fg='text', bg='dark'):
-    return {
-        'foreground': colors[fg],
-        'background': colors[bg]
-    }
-
-def separator():
-    return widget.Sep(**base(), linewidth=0, padding=5)
-
-def icon(fg='text', bg='dark', fontsize=16, text="?"):
-    return widget.TextBox(
-        **base(fg, bg),
-        fontsize=fontsize,
-        text=text,
-        padding=0
-    )
-
-def powerline(fg="light", bg="dark"):
-    return widget.TextBox(
-        **base(fg, bg),
-       # text="\u25E2",
-       text="❮",
-        fontsize=31,
-        padding=5
-    )
-
-def powerline1(fg="light", bg="dark"):
-    return widget.TextBox(
-        **base(fg, bg),
-       # text="\u25E4",
-       text= " ❯",
-        fontsize=31,
-        padding=5
-    )
-
-def workspaces():
-    return [
-        separator(),
-        widget.GroupBox(
-            **base(fg='light'),
-            font='UbuntuMono Nerd Font',
-            fontsize=20,
-            margin_y=3,
-            margin_x=0,
-            padding_y=0,
-            padding_x=10,
-            borderwidth=2.5,
-            active=colors['color5'],
-            inactive=colors['light'],
-            rounded=False,
-            disable_drag=False,
-            highlight_method='line',
-            urgent_alert_method='block',
-            urgent_border=colors['text'],
-            this_current_screen_border=colors['light'],
-            this_screen_border=colors['dark'],
-            other_current_screen_border=colors['dark'],
-            other_screen_border=colors['dark'],
-            ),]
-
-#secondary_widgets = [
-#*workspaces(),
-#separator(),
-#powerline1('light', 'dark'),
-# widget.WindowName(**base(fg='light'), fontsize=14),
-#widget.WindowCount(**base(fg='active', bg='dark'), fontsize=14, text_format='{num} ', show_zero=True),
-#widget.CurrentLayoutIcon(**base(bg='dark', fg='light'), scale=1),
-#widget.CurrentLayout(**base(bg='dark', fg='light'), padding=5),
-#powerline1('light', 'dark'),
-#widget.Clock(**base(bg='dark', fg='light'), format='%c '),
-
-#widget.TaskList(**base(bg='dark',fg='light'), fontsize=18, margin=0, highlight_method="block", markup_focused="<span underline='low'>{}</span>", title_width_method='uniform', boderwidth=0,font="Iosevka", border='#00111a', urgent_border='dark' ),
-
-#separator(),
-
-#widget.Notify(**base(bg='dark', fg="light"), padding=5, max_chars=10,default_timeout=3, action=True),
-
-#widget.WindowCount(**base(fg='light', bg='dark'), fontsize=14, text_format='{num} ', show_zero=True),
-    
-#widget.CurrentLayoutIcon(**base(bg='dark', fg='light'), scale=0.7),
-
-#widget.CurrentLayout(**base(bg='dark', fg='light'), padding=5),
-
-#]
-
-widget_defaults = dict(
-    font='Iosevka',
-    fontsize= 18,
-    padding= 1,
-)
-
-extension_defaults = widget_defaults.copy()
-
-##SCREEN-BAR
-
-screens = [Screen(
-# Set Wallpaper Natively
- wallpaper='/home/kurama/Pictures/awall/walll.jpg',
- wallpaper_mode='stretch',
-
-top=bar.Bar([
-
- widget.Image(**base(bg='dark') ,filename="~/.config/qtile/icons/winmen.png", scale = "True",margin_x=5, margin=3,mouse_callbacks = {"Button1": lambda: os.system("rofi -show drun -show-icons -theme /home/kurama/.config/rofi/launchers/misc/blurry.rasi")}),
-
-*workspaces(),
- 
-widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.60), widget.WindowCount(**base(fg='light', bg='dark'), fontsize=14, text_format='[{num}]', show_zero=True, padding=1),
-
-powerline1('light','dark'),
-
-widget.Memory(**base(fg='light',bg='dark'), fontsize=15, format=' [{MemUsed:.0f}{mm}/6.8G] : ', padding=1 ),
-
- widget.CPU(**base(fg='light',bg='dark'), fontsize=15, padding=1,format='({load_percent}%)'),
-
-powerline1('light','dark'),
-       
-widget.Clock(**base(bg='dark',fg="light"), format=' %b-%d~%l:%M:%S %p ', padding=0),
-
-#powerline1('light','dark'),
-#powerline1('color3','dark'),
-#separator(),
-#widget.WindowName(**base(fg='light'), fontsize=14),
-#powerline1('light','dark'),
-
-widget.TaskList(**base(bg='dark', fg='light'), fontsize=13, margin=0, highlight_method="block", markup_focused="<span size='larger' weight='bold' underline='low'>{}</span>", title_width_method='uniform', boderwidth=0,font="Iosevka", border='#212121', urgent_border='#212121', rounded=False, txt_floating="🗗", txt_maximized="🗖", txt_minimized="" ),
-
-#widget.CPU(**base(fg='light',bg='dark'), fontsize=15, padding=1),
-#powerline1('light','dark'),
-#powerline1('color1', 'dark'),
-#powerline1('color2','dark'),
-#powerline('light','dark'),
-#powerline('focus','dark'),
-#powerline('light','dark'),
-#icon(bg="dark", fg="light", text=' '),  # Icon: nf-fa-feed
-
-widget.Net(**base(bg='dark', fg="light"), interface='wlp1s0', padding=1, format='{down} ↓↑{up}'),
- 
-
-#widget.CurrentLayout(**base(bg='dark', fg="light"), padding=5),
-
-powerline('active', 'dark'),
-   
-widget.Battery(**base(bg='dark',fg="light"),charge_char='',unknown_char=' ',discharge_char='', format= '{char} {percent:2.0%}', update_interval=10 ,padding=5),
-
-powerline('light','dark'),
-   
-icon(bg='dark', fg="light",text='🔅'),  # Icon: nf-fa-feed
-
-widget.Backlight(**base(bg='dark', fg="light"), padding=5, brightness_file="/sys/class/backlight/amdgpu_bl0/brightness", max_brightness_file="/sys/class/backlight/amdgpu_bl0/max_brightness"),
-
-powerline('light','dark'),
-
-icon(bg='dark',fg="light",text='🔊'),  # Icon: nf-fa-feed
-
-widget.Volume(**base(bg='dark', fg="light")),
-
-powerline('light','dark'),
- 
-# powerline('color3', 'dark'),
-
-widget.Systray(background=colors['dark'], padding=5),
-], 30, opacity=0.72 ))]
-
-#bottom=status_bar(secondary_widgets))]
-
-##FORMULTIPLE-MONITORS##
-
-xrandr = "xrandr | grep -w 'connected' | cut -d ' ' -f 2 | wc -l"
-
-command = subprocess.run(
-xrandr,
-shell=True,
-stdout=subprocess.PIPE,
-stderr=subprocess.PIPE,
-)
-
-if command.returncode != 0:
-    error = command.stderr.decode("UTF-8")
-    logger.error(f"Failed counting monitors using {xrandr}:\n{error}")
-    connected_monitors = 1
-else:
-    connected_monitors = int(command.stdout.decode("UTF-8"))
-
-#if connected_monitors > 1:
-#    for _ in range(1, connected_monitors):
-#        screens.append(Screen(top=status_bar(secondary_widgets)))
 
 ##DECLARING-GROUP##NERD-FONTS##
 groups =[Group(i) for i in [ 
-" "," "," ", " ", " ", " "
+"","","", "", "", ""
 ]]
 
 ##GROUP-SWITCH-KEYBINDING##
@@ -388,12 +155,18 @@ for i, group in enumerate(groups):
     keys.extend([Key([mod], actual_key, lazy.group[group.name].toscreen(), desc="Change Workspaces"),
     Key([mod, "shift"], actual_key, lazy.window.togroup(group.name), desc="Send Window to n Workspace"), ])
 
-####DROPDOWN-GROUPS####
+
+layout_conf = {
+    'border_focus':"#ffffff",
+    'border_width': 2,
+    'border_normal': "#666666",
+    'margin': 5
+}
 
 ##DROPDOWN-DECORATIONS
 
 dropdown_conf = {
-    'opacity': 0.8,
+    'opacity': 0.93,
     'warp_pointer': True,
     'x' : 0.255,
     'y' : 0.20,
@@ -412,7 +185,7 @@ groups.append(
             ),
             DropDown(
                 'filemanager',
-                'kitty /home/kurama/.config/vifm/scripts/vifmrun',
+                'kitty /home/random/.config/vifm/scripts/vifmrun',
                 **dropdown_conf
             ),
             DropDown(
@@ -421,15 +194,15 @@ groups.append(
                 **dropdown_conf
             ),
             DropDown(
-                'anime',
-                'kitty ani-cli',
+                'youtube',
+                'kitty ytfzf',
                  **dropdown_conf
             ),
              DropDown(
                 'sound',
                 'pavucontrol',
                 **dropdown_conf
-            )
+            ),
         ]
     )
 )
@@ -444,42 +217,111 @@ Key( [mod,"control"], 'e', lazy.group['sp'].dropdown_toggle('filemanager') ),
         
 Key( [mod], 'p', lazy.group['sp'].dropdown_toggle('htop') ),
          
-Key( [mod,"control"], 'u', lazy.group['sp'].dropdown_toggle('anime') ),
+Key( [mod], 'y', lazy.group['sp'].dropdown_toggle('youtube') ),
             
 Key([mod], 's',lazy.group['sp'].dropdown_toggle('sound') )])
 
-###MOUSE####
+layouts = [
+layout.Columns(**layout_conf),
+layout.Max(),
+]
 
+widget_defaults = dict(
+    font='Iosevka',
+    fontsize=15,
+    padding=3,
+)
+extension_defaults = widget_defaults.copy()
+def workspaces():
+    return [
+        widget.GroupBox(
+            **base(fg='light'),
+            font='Iosevka',
+            fontsize=18,
+            margin_y=3,
+            margin_x=0,
+            padding_y=0,
+            padding_x=10,
+            borderwidth=2.5,
+            active= colors['white'] ,
+            inactive= colors['lightgrey'],
+            rounded=False,
+            disable_drag=False,
+            highlight_method='line',
+            urgent_alert_method='block',
+            urgent_border=colors['text'],
+            this_current_screen_border=colors['light'],
+            this_screen_border=colors['dark'],
+            other_current_screen_border=colors['dark'],
+            other_screen_border=colors['dark'],
+            ),]
+
+screens = [
+    Screen(
+         wallpaper='/home/random/Pictures/wall/70w.jpg',
+         wallpaper_mode='stretch',
+        top=bar.Bar(
+            [
+                *workspaces(),
+                widget.CurrentLayoutIcon(**base(bg='dark',fg="light"), scale=0.60), 
+                widget.WindowCount(**base(fg='light', bg='dark'), fontsize=14, text_format='[{num}]', show_zero=True, padding=1),
+                widget.Clock(**base(bg='dark',fg="light"), format=' <span size="large" weight="bold">%b-%d</span><span size="x-large"> %l:%M:%S %p</span> ', padding=0),
+                widget.TaskList(**base(bg='dark', fg='light'), fontsize=15, margin=0, highlight_method="block", markup_focused="<span size='x-large' underline='low'>{}</span>", title_width_method='uniform', icon_size=20, boderwidth=0,font="Iosevka Term Medium", border='#212121', urgent_border='#212121', rounded=False, txt_floating="🗗", txt_maximized="🗖", txt_minimized="" ),
+                icon(bg='dark',fg="light",text='', fontsize=16),
+                widget.Net(**base(bg='dark', fg="light"), interface='wlp1s0', padding=5, format='{down} ↓↑{up}'),
+                separator(),
+                widget.Battery(**base(bg='dark',fg="light"),charge_char=' ',unknown_char=' ',discharge_char=' ', format= '{char}{percent:2.0%}', update_interval=10, fontsize=15, padding=5),
+                icon(bg='dark',fg="light",text='  ', fontsize=15),
+                widget.PulseVolume(**base(bg='dark', fg="light")),
+                icon(bg='dark', fg="light",text='  ', fontsize=16),  
+                widget.Backlight(**base(bg='dark', fg="light"), padding=5, brightness_file="/sys/class/backlight/amdgpu_bl0/brightness", max_brightness_file="/sys/class/backlight/amdgpu_bl0/max_brightness"),
+                widget.Systray(**base(bg='dark',fg='light')),
+            ],
+            30, opacity=0.72 
+        ),
+    ),
+]
+
+# Drag floating layouts.
 mouse = [
+    Drag([mod], "Button1", lazy.window.set_position_floating(),
+         start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front())
+]
 
-Drag( [mod],"Button1",lazy.window.set_position_floating(),start=lazy.window.get_position()),
-
-Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-
-Click([mod], "Button2", lazy.window.bring_to_front())]
-
-
-##FLOATING-LAYOUT-RULES##
-
-floating_layout = layout.Floating(
-float_rules=[{ 'wmclass': 'feh' },
-    *layout.Floating.default_float_rules,
-    Match(wm_class='confirmreset'),
-    Match(wm_class='makebranch'),
-    Match(wm_class='maketag'),
-    Match(wm_class='ssh-askpass'),
-    Match(title='branchdialog'),
-    Match(title='pinentry'),],
-border_focus="#ffffff")
-
-
-
-main = None
 dgroups_key_binder = None
-dgroups_app_rules = []
+dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
-bring_front_click = True
-cursor_warp = True
+bring_front_click = False
+cursor_warp = False
+floating_layout = layout.Floating(
+    float_rules=[
+        *layout.Floating.default_float_rules,
+        Match(wm_class="feh" ),
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="makebranch"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(title="branchdialog"),  # gitk
+        Match(title="pinentry"),  # GPG key password entry
+    ] , **layout_conf
+)
 auto_fullscreen = True
-focus_on_window_activation = 'smart'
-wmname = 'qtile'
+focus_on_window_activation = "smart"
+reconfigure_screens = True
+
+# If things like steam games want to auto-minimize themselves when losing
+# focus, should we respect this or not?
+auto_minimize = True
+
+# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
+# string besides java UI toolkits; you can see several discussions on the
+# mailing lists, GitHub issues, and other WM documentation that suggest setting
+# this string if your java app doesn't work correctly. We may as well just lie
+# and say that we're a working one by default.
+#
+# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
+# java that happens to be on java's whitelist.
+wmname = "qtile"

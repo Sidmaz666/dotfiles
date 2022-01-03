@@ -1,0 +1,9 @@
+#### DIR: Documents
+paru: https://github.com/Morganamilo/paru.git
+rofi-color-picker: https://github.com/windwp/rofi-color-picker.git
+fzf: https://github.com/junegunn/fzf.git
+floatTerm[Vim]:https://github.com/voldikss/vim-floaterm.git
+vim-coc: https://github.com/neoclide/coc.nvim.git
+rofi-fontawesome:https://github.com/wstam88/rofi-fontawesome.git
+battery_notifications:  git clone https://github.com/SofianeHamlaoui/battery-notifications.git
+ani-cli: https://github.com/pystardust/ani-cli.git

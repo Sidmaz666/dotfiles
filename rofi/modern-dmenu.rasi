@@ -1,0 +1,47 @@
+/**
+ * Dmenu Theme Forked By Sidmaz666
+ */
+configuration {
+    display-run     : " ";
+    display-drun    : " ";
+    display-window  : " ";
+    display-combi   : " ";
+   disable-history:  false;
+}
+* {
+    background-color:      #212121;
+    border-color:          White;
+    text-color:           #FFFFFF;
+    font:            "Iosevka 13";
+}
+window {
+    anchor:     north;
+    location:   north;
+    width:      100%;
+    padding:    4px;
+    children:   [ horibox ];
+}
+horibox {
+    orientation: horizontal;
+    children:   [ prompt, entry, listview ];
+}
+listview {
+    layout:     horizontal;
+    spacing:    5px;
+    lines:      100;
+}
+entry {
+    expand:     false;
+    width:      10em;
+}
+element {
+    padding: 0px 2px;
+}
+element selected {
+    background-color: #343536;
+}
+
+element-text, element-icon {
+  background-color: inherit;
+  text-color: inherit;
+}
