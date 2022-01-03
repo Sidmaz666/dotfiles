@@ -7,3 +7,4 @@ vim-coc: https://github.com/neoclide/coc.nvim.git
 rofi-fontawesome:https://github.com/wstam88/rofi-fontawesome.git
 battery_notifications:  git clone https://github.com/SofianeHamlaoui/battery-notifications.git
 ani-cli: https://github.com/pystardust/ani-cli.git
+vifmimg: https://github.com/cirala/vifmimg.git
