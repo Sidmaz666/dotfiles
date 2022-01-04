@@ -64,7 +64,7 @@ read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
-sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
@@ -72,7 +72,7 @@ loadkeys us
 timedatectl set-ntp true
 echo -e "$BASH_COLOR_BrownOrange"
 lsblk
-echo -e "$BASH_COLOR_White"
+echo -e "$BASH_COLOR_Yellow"
 echo "Enter the drive: "
 read drive
 cfdisk $drive 
