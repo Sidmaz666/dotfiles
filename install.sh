@@ -139,12 +139,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.txt -o /tmp/pacman.txt
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/rofi/modern-dmenu.rasi -o /usr/share/rofi/themes/dmenu.rasi
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/logind.conf -o /etc/systemd/logind.conf
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/getty%40.service -o /etc/systemd/system/getty.target.wants/getty@tty1.service 
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 systemctl enable NetworkManager.service 
-chsh -s /bin/zsh 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Enter Username: "
 read username
@@ -163,7 +161,9 @@ exit
 part_two
 
 #sectionTwoComplete
-
+dot_dir="$HOME/Documents"
+conf_dir="$HOME/.config"
+echo -e "$BASH_COLOR_BrownOrange Getting Paru AUR Helper"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
 pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sudo pacman -S --needed --noconfirm base-devel
@@ -172,9 +172,21 @@ cd paru
 makepkg -si
 cd ..
 rm -Rf paru
+rm  -Rf  $conf_dir/picom
+rm  -Rf  $conf_dir/kitty
+rm  -Rf  $conf_dir/dunst
+rm  -Rf  $conf_dir/mpv
+rm  -Rf  $conf_dir/neofetch
+rm  -Rf  $conf_dir/qtile
+rm  -Rf  $conf_dir/vifm
+rm  -Rf  $conf_dir/gtk-2.0
+rm  -Rf  $conf_dir/gtk-3.0
+rm  -Rf  $conf_dir/rofi
+rm  -Rf  $conf_dir/ytfzf
 paru -Syy --noconfirm
 paru -S $(cat /tmp/paru.txt)
 rm /tmp/paru.txt
+chsh -s /bin/zsh 
 echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
 echo -e "Making Script Directory"
@@ -185,22 +197,21 @@ mkdir -p Downloads
 echo -e "$BASH_COLOR_BrownOrange Getting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time"
 git clone https://github.com/Sidmaz666/dotfiles.git ~/Downloads
-dot_dir="$HOME/Documents"
-conf_dir="$HOME/.config"
-mv -vf scripts $dot_dir
-mv -vf wall $HOME/Pictures
-mv -vf picom $conf_dir
-mv -vf kitty $conf_dir
-mv -vf dunst $conf_dir
-mv -vf mpv $conf_dir
-mv -vf neofetch $conf_dir
-mv -vf qtile $conf_dir
-mv -vf vifm $conf_dir
-mv -vf gtk-2.0 $conf_dir
-mv -vf gtk-3.0 $conf_dir
-mv -vf rofi/powermenu $conf_dir/rofi/applets/android
-mv -vf ytfzf $conf_dir
-mv vim/vimrc $HOME/.vimrc
+cd Downloads/dotfiles
+cp  -R  scripts $dot_dir
+cp  -R  wall $HOME/Pictures
+cp  -R  picom $conf_dir
+cp  -R  kitty $conf_dir
+cp  -R  dunst $conf_dir
+cp  -R  mpv $conf_dir
+cp  -R  neofetch $conf_dir
+cp  -R  qtile $conf_dir
+cp  -R  vifm $conf_dir
+cp  -R  gtk-2.0 $conf_dir
+cp  -R  gtk-3.0 $conf_dir
+cp  -R  rofi/powermenu $conf_dir/rofi/applets/android
+cp  -R  ytfzf $conf_dir
+cp mv vim/vimrc $HOME/.vimrc
 echo -e "Getting Required Github Projects"
 git clone https://github.com/windwp/rofi-color-picker.git $dot_dir/scripts
 git clone https://github.com/junegunn/fzf.git $dot_dir/scripts
@@ -210,8 +221,9 @@ mkdir -p $HOME/.vim/pack/coc/start
 git clone https://github.com/neoclide/coc.nvim.git $HOME/.vim/pack/coc/start
 echo -e "$BASH_COLOR_Purple"
 echo "Installing Better Lock Screen Fork Sharingan Lock"
-sudo mv betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
-sudo mv systemd/betterlockscreen.service@ /etc/systemd/system
+sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
+sudo cp  systemd/betterlockscreen.service@ /etc/systemd/system
+sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 sudo systemctl enable betterlockscreen@$USER
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
