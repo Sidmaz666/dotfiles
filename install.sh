@@ -64,7 +64,7 @@ read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
-sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+#sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
@@ -146,7 +146,7 @@ systemctl enable NetworkManager.service
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Enter Username: "
 read username
-useradd -m -G wheel -s /bin/zsh $username
+useradd -m -G wheel -s /bin/bash $username
 passwd $username
 echo -e "$BASH_COLOR_Purple"
 echo "Pre-Installation Finish Reboot now"
