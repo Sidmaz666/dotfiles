@@ -46,15 +46,15 @@ read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
+echo -e "$BASH_COLOR_LightCyan" 
+echo -e "Getting Latest Mirrors!\n"
 echo -e "$BASH_COLOR_LightGreen" 
+reflector --latest 20 --protocol https --sort rate --verbose --save /etc/pacman.d/mirrorlist 
 echo -e "Modifying pacman.conf\n"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman -Syy --noconfirm
 pacman --noconfirm -Sy archlinux-keyring
-echo -e "$BASH_COLOR_LightCyan" 
-echo -e "Getting Latest Mirrors!\n"
-sudo reflector -f 20 -l 20 --number 10 --verbose --save /etc/pacman.d/mirrorlist 
 loadkeys us
 timedatectl set-ntp true
 echo -e "$BASH_COLOR_BrownOrange"
