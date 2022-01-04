@@ -104,7 +104,7 @@ part_one
 #sectionTwoStart
 
 part_two(){
-echo -e "$BASH_COLOR_Blue"
+echo -e "$BASH_COLOR_Cyan"
 echo -e "$welcome_msg"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
