@@ -106,8 +106,10 @@ part_one
 part_two(){
 echo -e "$BASH_COLOR_Blue"
 echo -e "$welcome_msg"
-pacman -S --noconfirm sed curl
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
+sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
+pacman --noconfirm -Sy archlinux-keyring
+pacman -S --noconfirm sed curl git
 ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 hwclock --systohc
 echo -e "$BASH_COLOR_LightGreen"
@@ -143,6 +145,7 @@ cd paru
 makepkg -si
 cd ..
 rm -Rf paru
+paru -Syy --noconfirm
 paru -S $(cat /tmp/paru.txt)
 rm /tmp/pacman.txt
 rm /tmp/paru.txt
