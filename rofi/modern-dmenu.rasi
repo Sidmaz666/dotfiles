@@ -6,7 +6,7 @@ configuration {
     display-drun    : " ";
     display-window  : " ";
     display-combi   : " ";
-   disable-history:  false;
+   disable-history:  true;
 }
 * {
     background-color:      #212121;

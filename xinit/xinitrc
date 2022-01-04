@@ -48,5 +48,5 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 export QT_QPA_PLATFORMTHEME=gtk2
-export DSKTOP_SESSION=qtile
+export DESKTOP_SESSION=qtile
 exec qtile start

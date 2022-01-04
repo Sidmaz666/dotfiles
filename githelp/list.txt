@@ -1,4 +1,3 @@
-#### DIR: Documents
 paru: https://github.com/Morganamilo/paru.git
 rofi-color-picker: https://github.com/windwp/rofi-color-picker.git
 fzf: https://github.com/junegunn/fzf.git
