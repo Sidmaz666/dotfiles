@@ -60,14 +60,13 @@ clear
 echo -e "$BASH_COLOR_Cyan"
 echo -e "$welcome_msg"
 echo -e "$BASH_COLOR_LightGreen"
-read -p "Continue?(y/n)" con
+read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
 sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
-sed -i "s/^#Color$/Color/" /etc/pacman.conf
-sed -i "s/^#ILoveCandy$/ILoveCandy/" /etc/pacman.conf
+sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
 loadkeys us
 timedatectl set-ntp true
