@@ -47,9 +47,9 @@ if [ $con != y ]; then
   exit
 fi
 echo -e "$BASH_COLOR_LightCyan" 
-echo -e "Getting Latest Mirrors!\n"
+echo -e "Getting Latest Mirrors!"
 echo -e "$BASH_COLOR_LightGreen" 
-reflector --latest 20 --protocol https --sort rate --verbose --save /etc/pacman.d/mirrorlist 
+reflector -f 10 --latest 10 --country United States, India  --protocol https --sort rate --save /etc/pacman.d/mirrorlist  > /dev/null 2>&1
 echo -e "Modifying pacman.conf\n"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
