@@ -64,7 +64,7 @@ read -p "Continue?(y/n)" con
 if [ $con != y ]; then 
   exit
 fi
-sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color/" /etc/pacman.conf
 sed -i "s/^#ILoveCandy$/ILoveCandy/" /etc/pacman.conf
