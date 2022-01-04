@@ -140,6 +140,7 @@ curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.t
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/rofi/modern-dmenu.rasi -o /usr/share/rofi/themes/dmenu.rasi
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/logind.conf -o /etc/systemd/logind.conf
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
+pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 systemctl enable NetworkManager.service 
@@ -152,24 +153,25 @@ echo -e "$BASH_COLOR_Purple"
 echo "Pre-Installation Finish Reboot now"
 script=/home/$username/install3.sh
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > $script
-chown $username:$username $script_transferto
+chown $username:$username $script
 chmod +x $script
-su -c $script -s /bin/sh $username
+su -c $script -s /bin/bash $username
 exit 
 }
 
 part_two
 
 #sectionTwoComplete
+
 dot_dir="$HOME/Documents"
 conf_dir="$HOME/.config"
 echo -e "$BASH_COLOR_BrownOrange Getting Paru AUR Helper"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
-pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sudo pacman -S --needed --noconfirm base-devel
 git clone https://aur.archlinux.org/paru.git 
 cd paru
 makepkg -si
+paru -Sy $(cat /tmp/paru.txt)
 cd ..
 rm -Rf paru
 rm  -Rf  $conf_dir/picom
@@ -183,8 +185,6 @@ rm  -Rf  $conf_dir/gtk-2.0
 rm  -Rf  $conf_dir/gtk-3.0
 rm  -Rf  $conf_dir/rofi
 rm  -Rf  $conf_dir/ytfzf
-paru -Syy --noconfirm
-paru -S $(cat /tmp/paru.txt)
 rm /tmp/paru.txt
 chsh -s /bin/zsh 
 echo -e "$BASH_COLOR_LightCyan"
