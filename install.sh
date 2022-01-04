@@ -137,27 +137,10 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/grub/grub -o /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.txt -o /tmp/pacman.txt
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
-pacman -S --noconfirm $(cat /tmp/pacman.txt)
-sudo pacman -S --needed --noconfirm base-devel
-git clone https://aur.archlinux.org/paru.git 
-cd paru
-makepkg -si
-cd ..
-rm -Rf paru
-paru -Syy --noconfirm
-paru -S $(cat /tmp/paru.txt)
-rm /tmp/pacman.txt
-rm /tmp/paru.txt
-
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/rofi/modern-dmenu.rasi -o /usr/share/rofi/themes/dmenu.rasi
-
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/logind.conf -o /etc/systemd/logind.conf
-
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/getty%40.service -o /etc/systemd/system/getty.target.wants/getty@tty1.service 
- 
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
-
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 systemctl enable NetworkManager.service 
@@ -181,6 +164,17 @@ part_two
 
 #sectionTwoComplete
 
+curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
+pacman -S --noconfirm $(cat /tmp/pacman.txt)
+sudo pacman -S --needed --noconfirm base-devel
+git clone https://aur.archlinux.org/paru.git 
+cd paru
+makepkg -si
+cd ..
+rm -Rf paru
+paru -Syy --noconfirm
+paru -S $(cat /tmp/paru.txt)
+rm /tmp/paru.txt
 echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
 echo -e "Making Script Directory"
