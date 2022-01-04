@@ -20,37 +20,23 @@ BASH_COLOR_LightGray='\033[0;37m'
 BASH_COLOR_White='\033[1;37m'
 
 IFS='' read -r -d '' welcome_msg <<"EOF"
-  
-   █     █░▓█████  ██▓     ▄████▄   ▒█████   ███▄ ▄███▓▓█████    ▄▄▄█████▓ ▒█████                                         
-  ▓█░ █ ░█░▓█   ▀ ▓██▒    ▒██▀ ▀█  ▒██▒  ██▒▓██▒▀█▀ ██▒▓█   ▀    ▓  ██▒ ▓▒▒██▒  ██▒                                       
-  ▒█░ █ ░█ ▒███   ▒██░    ▒▓█    ▄ ▒██░  ██▒▓██    ▓██░▒███      ▒ ▓██░ ▒░▒██░  ██▒                                       
-  ░█░ █ ░█ ▒▓█  ▄ ▒██░    ▒▓▓▄ ▄██▒▒██   ██░▒██    ▒██ ▒▓█  ▄    ░ ▓██▓ ░ ▒██   ██░                                       
-  ░░██▒██▓ ░▒████▒░██████▒▒ ▓███▀ ░░ ████▓▒░▒██▒   ░██▒░▒████▒     ▒██▒ ░ ░ ████▓▒░                                       
-  ░ ▓░▒ ▒  ░░ ▒░ ░░ ▒░▓  ░░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ░  ░░░ ▒░ ░     ▒ ░░   ░ ▒░▒░▒░                                        
-    ▒ ░ ░   ░ ░  ░░ ░ ▒  ░  ░  ▒     ░ ▒ ▒░ ░  ░      ░ ░ ░  ░       ░      ░ ▒ ▒░                                        
-    ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░        ░      ░ ░ ░ ▒                                         
-      ░       ░  ░    ░  ░░ ░          ░ ░         ░      ░  ░                ░ ░                                         
-                          ░                                                                                               
-                                  ██████  ██▓▓█████▄  ███▄ ▄███▓ ▄▄▄      ▒███████▒                                       
-                                ▒██    ▒ ▓██▒▒██▀ ██▌▓██▒▀█▀ ██▒▒████▄    ▒ ▒ ▒ ▄▀░                                       
-                                ░ ▓██▄   ▒██▒░██   █▌▓██    ▓██░▒██  ▀█▄  ░ ▒ ▄▀▒░                                        
-                                  ▒   ██▒░██░░▓█▄   ▌▒██    ▒██ ░██▄▄▄▄██   ▄▀▒   ░                                       
-                                ▒██████▒▒░██░░▒████▓ ▒██▒   ░██▒ ▓█   ▓██▒▒███████▒                                       
-                                ▒ ▒▓▒ ▒ ░░▓   ▒▒▓  ▒ ░ ▒░   ░  ░ ▒▒   ▓▒█░░▒▒ ▓░▒░▒                                       
-                                ░ ░▒  ░ ░ ▒ ░ ░ ▒  ▒ ░  ░      ░  ▒   ▒▒ ░░░▒ ▒ ░ ▒                                       
-                                ░  ░  ░   ▒ ░ ░ ░  ░ ░      ░     ░   ▒   ░ ░ ░ ░ ░                                       
-                                      ░   ░     ░           ░         ░  ░  ░ ░                                           
-                                              ░                           ░                                               
-   ▄▄▄       ██▀███   ▄████▄   ██░ ██     ██▓ ███▄    █   ██████ ▄▄▄█████▓ ▄▄▄       ██▓     ██▓    ▓█████  ██▀███   ▐██▌ 
-  ▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒   ▓██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██▒    ▓██▒    ▓█   ▀ ▓██ ▒ ██▒ ▐██▌ 
-  ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░   ▒██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒██░    ▒██░    ▒███   ▓██ ░▄█ ▒ ▐██▌ 
-  ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██    ░██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ▒██░    ▒██░    ▒▓█  ▄ ▒██▀▀█▄   ▓██▒ 
-   ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓   ░██░▒██░   ▓██░▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░██████▒░██████▒░▒████▒░██▓ ▒██▒ ▒▄▄  
-   ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒   ░▓  ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▓  ░░░ ▒░ ░░ ▒▓ ░▒▓░ ░▀▀▒ 
-    ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░    ▒ ░░ ░░   ░ ▒░░ ░▒  ░ ░    ░      ▒   ▒▒ ░░ ░ ▒  ░░ ░ ▒  ░ ░ ░  ░  ░▒ ░ ▒░ ░  ░ 
-    ░   ▒     ░░   ░ ░         ░  ░░ ░    ▒ ░   ░   ░ ░ ░  ░  ░    ░        ░   ▒     ░ ░     ░ ░      ░     ░░   ░     ░ 
-        ░  ░   ░     ░ ░       ░  ░  ░    ░           ░       ░                 ░  ░    ░  ░    ░  ░   ░  ░   ░      ░    
-                   ░                                                                                                    
+	ARCH-INSTALLER+RICER
+  ⣿⣿⣿⣿⣿⣿⠟⠋⠁⣀⣤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿
+  ⣿⣿⣿⣿⠋⠁⠀⠀⠺⠿⢿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⣿
+  ⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣤⣤⣤⠀⠀⠀⠀⠀⣤⣦⣄⠀⠀
+  ⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⠏⣿⣿⣿⣿⣿⣁⠀⠀⠀⠛⠙⠛⠋⠀⠀
+  ⡿⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⣰⣿⣿⣿⣿⡄⠘⣿⣿⣿⣿⣷⠄⠀⠀⠀⠀⠀⠀⠀⠀
+  ⡇⠀⠀⠀⠀⠀⠀⠀⠸⠇⣼⣿⣿⣿⣿⣿⣷⣄⠘⢿⣿⣿⣿⣅⠀⠀⠀⠀⠀⠀⠀⠀
+  ⠁⠀⠀⠀⣴⣿⠀⣐⣣⣸⣿⣿⣿⣿⣿⠟⠛⠛⠀⠌⠻⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⣶⣮⣽⣰⣿⡿⢿⣿⣿⣿⣿⣿⡀⢿⣤⠄⢠⣄⢹⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⣿⣿⣿⣿⣿⡘⣿⣿⣿⣿⣿⣿⠿⣶⣶⣾⣿⣿⡆⢻⣿⣿⠃⢠⠖⠛⣛⣷⠀
+  ⠀⠀⢸⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣮⣝⡻⠿⠿⢃⣄⣭⡟⢀⡎⣰⡶⣪⣿⠀
+  ⠀⠀⠘⣿⣿⣿⠟⣛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⡿⢁⣾⣿⢿⣿⣿⠏⠀
+  ⠀⠀⠀⣻⣿⡟⠘⠿⠿⠎⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣵⣿⣿⠧⣷⠟⠁⠀⠀
+  ⡇⠀⠀⢹⣿⡧⠀⡀⠀⣀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⠀⠀⠀⠀
+  ⡇⠀⠀⠀⢻⢰⣿⣶⣿⡿⠿⢂⣿⣿⣿⣿⣿⣿⣿⢿⣻⣿⣿⣿⡏⠀⠀⠁⠀⠀⠀⠀
+  ⣷⠀⠀⠀⠀⠈⠿⠟⣁⣴⣾⣿⣿⠿⠿⣛⣋⣥⣶⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀ ⣿⡀
+	    By Sidmaz666
 EOF
 
 #sectionOneStart
@@ -64,7 +50,9 @@ read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
-#sudo reflector --country India --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+echo -e "$BASH_COLOR_LightCyan" 
+echo -e "Getting Latest Mirrors!"
+sudo reflector -f 50 -l 50 --number 20 --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
@@ -77,12 +65,12 @@ echo "Enter the drive: "
 read drive
 cfdisk $drive 
 echo -e "$BASH_COLOR_LightCyan"
-echo "Enter the linux partition: "
+echo "Enter the Linux partition: "
 read partition
 mkfs.ext4 $partition 
 echo -e "$BASH_COLOR_LightGreen"
 read -p "Did you also create efi partition? [y/n]" answer
-if [[ $answer = y ]] ; then
+if [ $answer = y ] ; then
   echo "Enter EFI partition: "
   read efipartition
   mkfs.vfat -F 32 $efipartition
@@ -104,8 +92,12 @@ part_one
 #sectionTwoStart
 
 part_two(){
+clear
 echo -e "$BASH_COLOR_Cyan"
 echo -e "$welcome_msg"
+echo -e "$BASH_COLOR_LightCyan" 
+echo -e "Getting Latest Mirrors!"
+sudo reflector -f 50 -l 50 --number 20 --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
@@ -128,6 +120,7 @@ echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 passwd
 pacman --noconfirm -S grub efibootmgr os-prober
+echo "[zram0]" > /etc/systemd/zram-generator.conf
 echo -e "$BASH_COLOR_BrownOrange"
 echo "Enter EFI partition: " 
 read efipartition
@@ -150,7 +143,8 @@ read username
 useradd -m -G wheel -s /bin/bash $username
 passwd $username
 echo -e "$BASH_COLOR_Purple"
-echo "Pre-Installation Finish Reboot now"
+clear
+echo "Pre-Installation Finished"
 script=/home/$username/install3.sh
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > $script
 chown $username:$username $script
@@ -162,31 +156,39 @@ exit
 part_two
 
 #sectionTwoComplete
-
+echo -e "Enabling Zram!"
+systemctl daemon-reload
+systemctl start /dev/zram0
 dot_dir="$HOME/Documents"
+mkdir -p $HOME/.config
 conf_dir="$HOME/.config"
-echo -e "$BASH_COLOR_BrownOrange Getting Paru AUR Helper"
+echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
 sudo pacman -S --needed --noconfirm base-devel
-git clone https://aur.archlinux.org/paru.git 
-cd paru
-makepkg -si
+git clone https://aur.archlinux.org/paru.git $HOME/Downloads
+cd $HOME/Downloads/paru
+makepkg -si 
+read -p "Unable to build Paru. Retry as sudo?(y/n) " err
+if [ $err = "y" ]; then
+  sudo makepkg -si
+fi
 paru -Sy $(cat /tmp/paru.txt)
-cd ..
-rm -Rf paru
-rm  -Rf  $conf_dir/picom
-rm  -Rf  $conf_dir/kitty
-rm  -Rf  $conf_dir/dunst
-rm  -Rf  $conf_dir/mpv
-rm  -Rf  $conf_dir/neofetch
-rm  -Rf  $conf_dir/qtile
-rm  -Rf  $conf_dir/vifm
-rm  -Rf  $conf_dir/gtk-2.0
-rm  -Rf  $conf_dir/gtk-3.0
-rm  -Rf  $conf_dir/rofi
-rm  -Rf  $conf_dir/ytfzf
+cd $HOME
+rm -Rf $HOME/Downloads/paru
+rm -Rf $conf_dir/picom
+rm -Rf $conf_dir/kitty
+rm -Rf $conf_dir/dunst
+rm -Rf $conf_dir/mpv
+rm -Rf $conf_dir/neofetch
+rm -Rf $conf_dir/qtile
+rm -Rf $conf_dir/vifm
+rm -Rf $conf_dir/gtk-2.0
+rm -Rf $conf_dir/gtk-3.0
+rm -Rf $conf_dir/rofi
+rm -Rf $conf_dir/ytfzf
 rm /tmp/paru.txt
 chsh -s /bin/zsh 
+clear
 echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
 echo -e "Making Script Directory"
@@ -211,7 +213,12 @@ cp  -R  gtk-2.0 $conf_dir
 cp  -R  gtk-3.0 $conf_dir
 cp  -R  rofi/powermenu $conf_dir/rofi/applets/android
 cp  -R  ytfzf $conf_dir
-cp mv vim/vimrc $HOME/.vimrc
+cp zsh/zshrc $HOME/.zshrc
+cp zsh/zprofile $HOME/.zprofile
+cp bash/bashrc $HOME/.bashrc
+cp bash/bashrc_profile $HOME/.bashrc_profile
+cp vim/vimrc $HOME/.vimrc
+cp xinit/xinitrc $HOME/.xinitrc
 echo -e "Getting Required Github Projects"
 git clone https://github.com/windwp/rofi-color-picker.git $dot_dir/scripts
 git clone https://github.com/junegunn/fzf.git $dot_dir/scripts
@@ -227,7 +234,7 @@ sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty
 sudo systemctl enable betterlockscreen@$USER
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
-read -p "Reload?(y/n)" $ xstarto
+read -p "Reboot?(y/n)" $ xstarto
 if [ $xstarto = y ]; then
   exit
 else 
