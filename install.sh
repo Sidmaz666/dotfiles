@@ -128,8 +128,6 @@ echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 passwd
 pacman --noconfirm -S grub efibootmgr os-prober
 echo -e "[zram0]" >> /etc/systemd/zram-generator.conf
-read -p "Enter Swap Partition" swp
-swapon $swp
 echo -e "$BASH_COLOR_BrownOrange"
 echo "Enter EFI partition: " 
 read efipartition
@@ -144,12 +142,13 @@ curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issue
 pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
-systemctl enable NetworkManager.service 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Enter Username: "
 read username
-useradd -m -G wheel -s /bin/sh $username
+useradd -m -G wheel $username
 passwd $username
+systemctl enable NetworkManager.service
+systemctl enable systemd-zram-setup@zram0.service
 echo -e "$BASH_COLOR_Purple"
 clear
 echo "Pre-Installation Finished"
@@ -157,7 +156,7 @@ script=/home/$username/install3.sh
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > $script
 chown $username:$username $script
 chmod +x $script
-su -c $script -s /bin/sh $username
+su -c $script -s /bin/bash $username
 exit 
 }
 
@@ -167,10 +166,7 @@ part_two
 
 echo -e "Enabling Zram!"
 sudo systemctl daemon-reload
-sudo systemctl start /dev/zram0 > /dev/null 2>&1
-echo -e "Enter Swap Partition"
-read lswp
-sudo systemctl start $lswp > /dev/null 2>&1
+sudo systemctl start /dev/zram0 
 dot_dir="$HOME/Documents"
 mkdir -p $HOME/.config
 conf_dir="$HOME/.config"
@@ -200,7 +196,6 @@ rm -Rf $conf_dir/gtk-3.0
 rm -Rf $conf_dir/rofi
 rm -Rf $conf_dir/ytfzf
 rm /tmp/paru.txt
-chsh -s /bin/zsh 
 clear
 echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
@@ -229,7 +224,7 @@ cp -R betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
 cp zsh/zshrc $HOME/.zshrc
 cp zsh/zprofile $HOME/.zprofile
 cp bash/bashrc $HOME/.bashrc
-cp bash/bash_profile $HOME/.bashrc_profile
+cp bash/bash_profile $HOME/.bash_profile
 cp vim/vimrc $HOME/.vimrc
 cp xinit/xinitrc $HOME/.xinitrc
 echo -e "Getting Required Github Projects"
@@ -239,6 +234,7 @@ git clone https://github.com/cirala/vifmimg.git $conf_dir/vifm
 git clone https://github.com/wstam88/rofi-fontawesome.git $dot_dir/scripts
 mkdir -p $HOME/.vim/pack/coc/start
 git clone https://github.com/neoclide/coc.nvim.git $HOME/.vim/pack/coc/start
+git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh
 echo -e "$BASH_COLOR_Purple"
 echo "Installing Better Lock Screen Fork Sharingan Lock"
 sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
@@ -248,6 +244,7 @@ sudo cp  rofi/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
 sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 sudo systemctl enable betterlockscreen@$USER
 sudo systemctl enable getty@tty1
+chsh -s /bin/zsh 
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
 read -p "Reboot?(y/n)" $ xstarto
