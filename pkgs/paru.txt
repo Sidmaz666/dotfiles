@@ -1,5 +1,4 @@
 aic94xx-firmware
-betterlockscreen
 bibata-cursor-theme
 brave-bin
 grub-silent

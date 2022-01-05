@@ -186,18 +186,19 @@ dot_dir="$HOME/Documents"
 mkdir -p $HOME/.config
 conf_dir="$HOME/.config"
 echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
+sudo pacman -Syyu --noconfirm
 sudo pacman -S --needed --noconfirm base-devel
 cd paru
 makepkg -si 
+echo -e "\n"
 read -p "Unable to build Paru. Retry as sudo?(y/n) " err
 if [ $err = "y" ]; then
   sudo makepkg -si
 fi
-paru -Syy --noconfirm
-paru --noconfirm -S $(cat /tmp/paru.txt)
+curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
+paru -S --noconfirm $(cat /tmp/paru.txt)
 cd $HOME
-rm -Rf $HOME/Downloads/paru
+rm -Rf paru
 rm -Rf $conf_dir/picom
 rm -Rf $conf_dir/kitty
 rm -Rf $conf_dir/dunst
@@ -216,7 +217,7 @@ echo -e "$welcome_msg"
 echo -e "Making Script Directory"
 mkdir -p $HOME/Documents/scripts
 mkdir -p $HOME/.config/rofi/applets
-echo -e "$BASH_COLOR_BrownOrange Getting All Of My Dotfiles....\n"
+echo -e "$BASH_COLOR_BrownOrange \nGetting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time"
 git clone https://github.com/Sidmaz666/dotfiles.git 
 cd dotfiles
@@ -242,10 +243,10 @@ cp bash/bash_profile $HOME/.bash_profile
 cp vim/vimrc $HOME/.vimrc
 cp xinit/xinitrc $HOME/.xinitrc
 echo -e "Getting Required Github Projects"
-git clone https://github.com/windwp/rofi-color-picker.git $dot_dir/scripts
-git clone https://github.com/junegunn/fzf.git $dot_dir/scripts
-git clone https://github.com/cirala/vifmimg.git $conf_dir/vifm
-git clone https://github.com/wstam88/rofi-fontawesome.git $dot_dir/scripts
+git clone https://github.com/windwp/rofi-color-picker.git $dot_dir/scripts/rofi-color-picker
+git clone https://github.com/junegunn/fzf.git $dot_dir/scripts/fzf
+git clone https://github.com/cirala/vifmimg.git $conf_dir/vifm/vifmimg
+git clone https://github.com/wstam88/rofi-fontawesome.git $dot_dir/scripts/rofi-fontawesome
 mkdir -p $HOME/.vim/pack/coc/start
 git clone https://github.com/neoclide/coc.nvim.git $HOME/.vim/pack/coc/start
 git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh

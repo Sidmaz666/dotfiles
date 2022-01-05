@@ -15,12 +15,9 @@ kitty
 lsd
 lxappearance
 make
-mariadb
 network-manager-applet
 patch
 pavucontrol
-php-apache
-phpmyadmin
 powerline-fonts
 python-pyalsa
 python-wheel
