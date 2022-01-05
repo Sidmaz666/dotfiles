@@ -140,6 +140,10 @@ Key([mod,"shift"], "n", lazy.spawn("/home/random/Documents/scripts/notflix/notfl
 
 Key([mod,"control"], "t", lazy.spawn("brave --app='https://www.monkeytype.com'"), desc="MonkeyTyping Practice"),
 
+Key([mod,"control"], "w", lazy.spawn("brave --app='https://web.whatsapp.com'"), desc="WhatsApp"),
+
+Key([mod,"control"], "u", lazy.spawn("unipicker --command 'rofi -dmenu -p Unicode -theme gruvbox-dark'"), desc="Unicode Selector"),
+
 ]
 
 ##DECLARING-GROUP##NERD-FONTS##
@@ -300,6 +304,7 @@ floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="feh" ),
+        Match(wm_class="web.whatsapp.com" ),
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk

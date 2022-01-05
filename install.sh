@@ -51,7 +51,7 @@ echo -e "Getting Latest Mirrors!"
 echo -e "$BASH_COLOR_LightGreen" 
 read -p "Update Mirrorlist?(y/n) " ref
 if [ $ref = "y" ]; then
-reflector -f 10 --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist  > /dev/null 2>&1
+reflector --verbose --completion-percent 100 --ipv6 --protocol https --score 20 --sort rate --save /etc/pacman.d/mirrorlist
 fi
 echo -e "Modifying pacman.conf\n"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
@@ -135,6 +135,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.txt -o /tmp/pacman.txt
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/rofi/modern-dmenu.rasi -o /usr/share/rofi/themes/dmenu.rasi
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/logind.conf -o /etc/systemd/logind.conf
+rm /etc/issue
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
 pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
