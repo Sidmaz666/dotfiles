@@ -46,13 +46,12 @@ read -p "Continue?(y/n) " con
 if [ $con != y ]; then 
   exit
 fi
-echo -e "$BASH_COLOR_LightCyan" 
-echo -e "Getting Latest Mirrors!"
 echo -e "$BASH_COLOR_LightGreen" 
 read -p "Update Mirrorlist?(y/n) " ref
 if [ $ref = "y" ]; then
 reflector --verbose --completion-percent 100 --ipv6 --protocol https --score 20 --sort rate --save /etc/pacman.d/mirrorlist
 fi
+echo -e "$BASH_COLOR_Cyan"
 echo -e "Modifying pacman.conf\n"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
@@ -68,11 +67,15 @@ echo "Enter the drive: "
 read drive
 cfdisk $drive 
 echo -e "$BASH_COLOR_LightCyan"
+clear 
+lsblk
 echo "Enter the Linux partition: "
 read partition
 mkfs.ext4 $partition 
 read -p "Did you also created a SWAP partition? [y/n] " swap
 if [ $swap = y ] ; then
+  clear 
+  lsblk
   echo "Enter SWAP partition: "
   read swapans
   mkswap $swapans
@@ -80,6 +83,8 @@ fi
 echo -e "$BASH_COLOR_LightGreen"
 read -p "Did you also create efi partition? [y/n] " answer
 if [ $answer = y ] ; then
+  clear
+  lsblk
   echo "Enter EFI partition: "
   read efipartition
   mkfs.vfat -F 32 $efipartition
@@ -129,6 +134,8 @@ passwd
 pacman --noconfirm -S grub efibootmgr os-prober
 echo -e "[zram0]" >> /etc/systemd/zram-generator.conf
 echo -e "$BASH_COLOR_BrownOrange"
+clear
+lsblk
 echo "Enter EFI partition: " 
 read efipartition
 mkdir /boot/efi
@@ -143,6 +150,8 @@ pacman -S --noconfirm $(cat /tmp/pacman.txt)
 sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+clear
+echo -e "$BASH_COLOR_LightCyan"
 echo "Enter Username: "
 read username
 useradd -m -G wheel $username
