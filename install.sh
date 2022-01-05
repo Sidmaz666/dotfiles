@@ -129,7 +129,9 @@ echo "::1             localhost" >> /etc/hosts
 echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 passwd
 pacman --noconfirm -S grub efibootmgr os-prober
-echo "[zram0]" > /etc/systemd/zram-generator.conf
+echo -e "[zram0]" >> /etc/systemd/zram-generator.conf
+read -p "Enter Swap Partition" swp
+swapon $swp
 echo -e "$BASH_COLOR_BrownOrange"
 echo "Enter EFI partition: " 
 read efipartition
@@ -167,8 +169,11 @@ part_two
 
 #sectionTwoComplete
 echo -e "Enabling Zram!"
-systemctl daemon-reload
-systemctl start /dev/zram0
+sudo systemctl daemon-reload
+sudo systemctl start /dev/zram0 > /dev/null 2>&1
+echo -e "Enter Swap Partition"
+read lswp
+sudo systemctl start $lswp > /dev/null 2>&1
 dot_dir="$HOME/Documents"
 mkdir -p $HOME/.config
 conf_dir="$HOME/.config"
@@ -176,7 +181,7 @@ echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
 sudo pacman -S --needed --noconfirm base-devel
 git clone https://aur.archlinux.org/paru.git $HOME/Downloads
-cd $HOME/Downloads/paru
+cd paru
 makepkg -si 
 read -p "Unable to build Paru. Retry as sudo?(y/n) " err
 if [ $err = "y" ]; then
@@ -209,21 +214,21 @@ cd $HOME
 mkdir -p Downloads
 echo -e "$BASH_COLOR_BrownOrange Getting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time"
-git clone https://github.com/Sidmaz666/dotfiles.git ~/Downloads
-cd Downloads/dotfiles
-cp -R  scripts $dot_dir
-cp -R  wall $HOME/Pictures
-cp -R  picom $conf_dir
-cp -R  kitty $conf_dir
-cp -R  dunst $conf_dir
-cp -R  mpv $conf_dir
-cp -R  neofetch $conf_dir
-cp -R  qtile $conf_dir
-cp -R  vifm $conf_dir
-cp -R  gtk-2.0 $conf_dir
-cp -R  gtk-3.0 $conf_dir
-cp -R  rofi/powermenu $conf_dir/rofi/applets/android
-cp -R  ytfzf $conf_dir
+git clone https://github.com/Sidmaz666/dotfiles.git 
+cd dotfiles
+cp -R scripts $dot_dir
+cp -R wall $HOME/Pictures
+cp -R picom $conf_dir
+cp -R kitty $conf_dir
+cp -R dunst $conf_dir
+cp -R mpv $conf_dir
+cp -R neofetch $conf_dir
+cp -R qtile $conf_dir
+cp -R vifm $conf_dir
+cp -R gtk-2.0 $conf_dir
+cp -R gtk-3.0 $conf_dir
+cp -R rofi/powermenu $conf_dir/rofi/applets/android
+cp -R ytfzf $conf_dir
 mkdir -p $HOME/.cache
 cp -R betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
 cp zsh/zshrc $HOME/.zshrc
@@ -250,8 +255,6 @@ echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
 read -p "Reboot?(y/n)" $ xstarto
 if [ $xstarto = y ]; then
-  exit
-else 
   reboot
 fi
 
