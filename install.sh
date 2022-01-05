@@ -180,7 +180,7 @@ conf_dir="$HOME/.config"
 echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
 sudo pacman -S --needed --noconfirm base-devel
-git clone https://aur.archlinux.org/paru.git $HOME/Downloads
+git clone https://aur.archlinux.org/paru.git 
 cd paru
 makepkg -si 
 read -p "Unable to build Paru. Retry as sudo?(y/n) " err
@@ -210,8 +210,6 @@ echo -e "$welcome_msg"
 echo -e "Making Script Directory"
 mkdir -p $HOME/Documents/scripts
 mkdir -p $HOME/.config/rofi/applets
-cd $HOME
-mkdir -p Downloads
 echo -e "$BASH_COLOR_BrownOrange Getting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time"
 git clone https://github.com/Sidmaz666/dotfiles.git 
@@ -234,7 +232,7 @@ cp -R betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
 cp zsh/zshrc $HOME/.zshrc
 cp zsh/zprofile $HOME/.zprofile
 cp bash/bashrc $HOME/.bashrc
-cp bash/bashrc_profile $HOME/.bashrc_profile
+cp bash/bash_profile $HOME/.bashrc_profile
 cp vim/vimrc $HOME/.vimrc
 cp xinit/xinitrc $HOME/.xinitrc
 echo -e "Getting Required Github Projects"
