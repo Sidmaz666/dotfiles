@@ -243,13 +243,18 @@ cp bash/bash_profile $HOME/.bash_profile
 cp vim/vimrc $HOME/.vimrc
 cp xinit/xinitrc $HOME/.xinitrc
 echo -e "Getting Required Github Projects"
-git clone https://github.com/windwp/rofi-color-picker.git $dot_dir/scripts/rofi-color-picker
-git clone https://github.com/junegunn/fzf.git $dot_dir/scripts/fzf
-git clone https://github.com/cirala/vifmimg.git $conf_dir/vifm/vifmimg
-git clone https://github.com/wstam88/rofi-fontawesome.git $dot_dir/scripts/rofi-fontawesome
+cd $dot_dir/scripts
+git clone https://github.com/windwp/rofi-color-picker.git 
+git clone https://github.com/junegunn/fzf.git 
+git clone https://github.com/wstam88/rofi-fontawesome.git 
+mkdir -p $conf_dir/vifm/scripts
+cd $conf_dir/vifm/vifmimg/scripts
+git clone https://github.com/cirala/vifmimg.git .
 mkdir -p $HOME/.vim/pack/coc/start
 git clone https://github.com/neoclide/coc.nvim.git $HOME/.vim/pack/coc/start
-git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh
+cd $HOME
+git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
+cd $HOME/dotfiles
 echo -e "$BASH_COLOR_Purple"
 echo "Installing Better Lock Screen Fork Sharingan Lock"
 sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
