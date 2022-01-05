@@ -105,8 +105,6 @@ clear
 echo -e "$BASH_COLOR_Cyan"
 echo -e "$welcome_msg"
 echo -e "$BASH_COLOR_LightCyan" 
-echo -e "Getting Latest Mirrors!"
-sudo reflector -f 50 -l 50 --number 20 --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 pacman --noconfirm -Sy archlinux-keyring
@@ -141,8 +139,6 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/grub/grub -o /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.txt -o /tmp/pacman.txt
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/rofi/modern-dmenu.rasi -o /usr/share/rofi/themes/dmenu.rasi
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/systemd/logind.conf -o /etc/systemd/logind.conf
 rm /etc/issue
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
 pacman -S --noconfirm $(cat /tmp/pacman.txt)
@@ -168,6 +164,7 @@ exit
 part_two
 
 #sectionTwoComplete
+
 echo -e "Enabling Zram!"
 sudo systemctl daemon-reload
 sudo systemctl start /dev/zram0 > /dev/null 2>&1
@@ -246,6 +243,8 @@ echo -e "$BASH_COLOR_Purple"
 echo "Installing Better Lock Screen Fork Sharingan Lock"
 sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
 sudo cp  systemd/betterlockscreen.service@ /etc/systemd/system
+sudo cp  systemd/logind.conf /etc/systemd/logind.conf
+sudo cp  rofi/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
 sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 sudo systemctl enable betterlockscreen@$USER
 sudo systemctl enable getty@tty1
@@ -255,4 +254,3 @@ read -p "Reboot?(y/n)" $ xstarto
 if [ $xstarto = y ]; then
   reboot
 fi
-
