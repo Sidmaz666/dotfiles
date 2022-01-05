@@ -71,8 +71,14 @@ echo -e "$BASH_COLOR_LightCyan"
 echo "Enter the Linux partition: "
 read partition
 mkfs.ext4 $partition 
+read -p "Did you also created a SWAP partition? [y/n] " swap
+if [ $swap = y ] ; then
+  echo "Enter SWAP partition: "
+  read swapans
+  mkswap $swapans
+fi
 echo -e "$BASH_COLOR_LightGreen"
-read -p "Did you also create efi partition? [y/n]" answer
+read -p "Did you also create efi partition? [y/n] " answer
 if [ $answer = y ] ; then
   echo "Enter EFI partition: "
   read efipartition
@@ -144,7 +150,7 @@ systemctl enable NetworkManager.service
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Enter Username: "
 read username
-useradd -m -G wheel -s /bin/bash $username
+useradd -m -G wheel -s /bin/sh $username
 passwd $username
 echo -e "$BASH_COLOR_Purple"
 clear
@@ -153,7 +159,7 @@ script=/home/$username/install3.sh
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > $script
 chown $username:$username $script
 chmod +x $script
-su -c $script -s /bin/bash $username
+su -c $script -s /bin/sh $username
 exit 
 }
 
@@ -176,7 +182,8 @@ read -p "Unable to build Paru. Retry as sudo?(y/n) " err
 if [ $err = "y" ]; then
   sudo makepkg -si
 fi
-paru -Sy $(cat /tmp/paru.txt)
+paru -Syy --noconfirm
+paru --noconfirm -S $(cat /tmp/paru.txt)
 cd $HOME
 rm -Rf $HOME/Downloads/paru
 rm -Rf $conf_dir/picom
@@ -204,19 +211,21 @@ echo -e "$BASH_COLOR_BrownOrange Getting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time"
 git clone https://github.com/Sidmaz666/dotfiles.git ~/Downloads
 cd Downloads/dotfiles
-cp  -R  scripts $dot_dir
-cp  -R  wall $HOME/Pictures
-cp  -R  picom $conf_dir
-cp  -R  kitty $conf_dir
-cp  -R  dunst $conf_dir
-cp  -R  mpv $conf_dir
-cp  -R  neofetch $conf_dir
-cp  -R  qtile $conf_dir
-cp  -R  vifm $conf_dir
-cp  -R  gtk-2.0 $conf_dir
-cp  -R  gtk-3.0 $conf_dir
-cp  -R  rofi/powermenu $conf_dir/rofi/applets/android
-cp  -R  ytfzf $conf_dir
+cp -R  scripts $dot_dir
+cp -R  wall $HOME/Pictures
+cp -R  picom $conf_dir
+cp -R  kitty $conf_dir
+cp -R  dunst $conf_dir
+cp -R  mpv $conf_dir
+cp -R  neofetch $conf_dir
+cp -R  qtile $conf_dir
+cp -R  vifm $conf_dir
+cp -R  gtk-2.0 $conf_dir
+cp -R  gtk-3.0 $conf_dir
+cp -R  rofi/powermenu $conf_dir/rofi/applets/android
+cp -R  ytfzf $conf_dir
+mkdir -p $HOME/.cache
+cp -R betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
 cp zsh/zshrc $HOME/.zshrc
 cp zsh/zprofile $HOME/.zprofile
 cp bash/bashrc $HOME/.bashrc
@@ -236,6 +245,7 @@ sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
 sudo cp  systemd/betterlockscreen.service@ /etc/systemd/system
 sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 sudo systemctl enable betterlockscreen@$USER
+sudo systemctl enable getty@tty1
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
 read -p "Reboot?(y/n)" $ xstarto
