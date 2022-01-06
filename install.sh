@@ -93,7 +93,7 @@ fi
 echo -e "$BASH_COLOR_Cyan"
 mount $partition /mnt 
 pacstrap /mnt base base-devel linux linux-firmware
-echo -e "Run Pactsrap again? (y/n)"
+echo -e "\nRun Pactsrap again? (y/n)\n"
 read pacs
 if [ $pacs = "y" ]; then 
 echo -e "Running Pactsrap again \n"
@@ -119,10 +119,10 @@ echo -e "$welcome_msg"
 echo -e "$BASH_COLOR_LightCyan" 
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
 sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
-pacman --noconfirm -Sy archlinux-keyring
-pacman -S --noconfirm sed curl git
 ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+timedatectl set-ntp true
 hwclock --systohc
+pacman -Sy --noconfirm sed curl git archlinux-keyring NetworkManager
 echo -e "$BASH_COLOR_LightGreen"
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
@@ -173,7 +173,6 @@ echo "Pre-Installation Finished"
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > install3.sh
 chown $username:$username install3.sh
 chown $username:$username /home/$username/paru
-chown $username:$username /tmp
 chmod +x install3.sh
 cp install3.sh /home/$username/install3.sh
 su -c /home/$username/install3.sh $username
@@ -201,7 +200,6 @@ echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
 echo -e "Making Script Directory"
 mkdir -p $HOME/Documents/scripts
-mkdir -p $HOME/.config/rofi/applets
 echo -e "$BASH_COLOR_BrownOrange \nGetting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time\n"
 git clone https://github.com/Sidmaz666/dotfiles.git 
@@ -217,6 +215,7 @@ rm -Rf $conf_dir/gtk-3.0
 rm -Rf $conf_dir/rofi
 rm -Rf $conf_dir/ytfzf
 cd dotfiles
+paru -Syyu --noconfirm
 paru -S $(cat pkgs/pkgs.txt) --noconfirm
 cp -R scripts $dot_dir
 mkdir -p $HOME/Pictures
@@ -230,7 +229,8 @@ cp -R qtile $conf_dir
 cp -R vifm $conf_dir
 cp -R gtk-2.0 $conf_dir
 cp -R gtk-3.0 $conf_dir
-cp -R rofi/powermenu $conf_dir/rofi/applets/android
+mkdir -p $conf_dir/rofi/applets/
+mv rofi/powermenu $conf_dir/rofi/applets/android
 cp -R ytfzf $conf_dir
 mkdir -p $HOME/.cache
 cp -R betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
