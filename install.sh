@@ -178,7 +178,7 @@ part_two
 #sectionTwoComplete
 
 cd $HOME
-echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
+echo -e "$BASH_COLOR_BrownOrange System Update Check"
 sudo pacman -Syyu --noconfirm
 sudo pacman -S --needed --noconfirm base-devel
 dot_dir="$HOME/Documents"
@@ -187,10 +187,17 @@ conf_dir="$HOME/.config"
 cd paru
 makepkg -si 
 echo -e "Building Paru...\n"
-curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
-paru -S --noconfirm $(cat /tmp/paru.txt)
 cd $HOME
 rm -Rf paru
+clear
+echo -e "$BASH_COLOR_LightCyan"
+echo -e "$welcome_msg"
+echo -e "Making Script Directory"
+mkdir -p $HOME/Documents/scripts
+mkdir -p $HOME/.config/rofi/applets
+echo -e "$BASH_COLOR_BrownOrange \nGetting All Of My Dotfiles....\n"
+echo -e "This Will Take Quite Some Time\n"
+git clone https://github.com/Sidmaz666/dotfiles.git 
 rm -Rf $conf_dir/picom
 rm -Rf $conf_dir/kitty
 rm -Rf $conf_dir/dunst
@@ -202,18 +209,10 @@ rm -Rf $conf_dir/gtk-2.0
 rm -Rf $conf_dir/gtk-3.0
 rm -Rf $conf_dir/rofi
 rm -Rf $conf_dir/ytfzf
-rm /tmp/paru.txt
-clear
-echo -e "$BASH_COLOR_LightCyan"
-echo -e "$welcome_msg"
-echo -e "Making Script Directory"
-mkdir -p $HOME/Documents/scripts
-mkdir -p $HOME/.config/rofi/applets
-echo -e "$BASH_COLOR_BrownOrange \nGetting All Of My Dotfiles....\n"
-echo -e "This Will Take Quite Some Time"
-git clone https://github.com/Sidmaz666/dotfiles.git 
 cd dotfiles
+paru -S $(cat pkgs/pkgs.txt) --noconfirm
 cp -R scripts $dot_dir
+mkdir -p $HOME/Pictures
 cp -R wall $HOME/Pictures
 cp -R picom $conf_dir
 cp -R kitty $conf_dir
@@ -239,9 +238,8 @@ cd $dot_dir/scripts
 git clone https://github.com/windwp/rofi-color-picker.git 
 git clone https://github.com/junegunn/fzf.git 
 git clone https://github.com/wstam88/rofi-fontawesome.git 
-mkdir -p $conf_dir/vifm/scripts
-cd $conf_dir/vifm/vifmimg/scripts
-git clone https://github.com/cirala/vifmimg.git .
+cd $conf_dir/vifm/vifmimg
+git clone https://github.com/cirala/vifmimg.git scripts 
 mkdir -p $HOME/.vim/pack/coc/start
 git clone https://github.com/neoclide/coc.nvim.git $HOME/.vim/pack/coc/start
 cd $HOME
@@ -250,7 +248,7 @@ cd $HOME/dotfiles
 echo -e "$BASH_COLOR_Purple"
 echo "Installing Better Lock Screen Fork Sharingan Lock"
 sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
-sudo cp  systemd/betterlockscreen.service@ /etc/systemd/system
+sudo cp  systemd/betterlockscreen.service@ /etc/systemd/system/betterlockscreen.service@
 sudo cp  systemd/logind.conf /etc/systemd/logind.conf
 sudo cp  rofi/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
 sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
@@ -259,8 +257,10 @@ sudo systemctl enable getty@tty1
 chsh -s /bin/zsh 
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
+cd $HOME
+mkdir -p Downloads
 mv dotfiles $HOME/Downloads
-read -p "Reboot?(y/n)" $ xstarto
+read -p "Reboot?(y/n)" xstarto
 if [ $xstarto = y ]; then
   reboot
 fi

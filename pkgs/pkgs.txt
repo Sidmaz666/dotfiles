@@ -1,7 +1,6 @@
 aic94xx-firmware
 alsa-utils
 amd-ucode
-apache
 autoconf
 automake
 base
@@ -45,7 +44,6 @@ lsd
 lxappearance
 m4
 make
-mariadb
 mesa
 mojave-gtk-theme
 mpv
@@ -60,9 +58,6 @@ pacman
 paru
 patch
 pavucontrol
-php
-php-apache
-phpmyadmin
 picom-ibhagwan-git
 pkgconf
 pm-utils
