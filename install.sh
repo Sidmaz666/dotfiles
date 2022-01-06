@@ -93,6 +93,12 @@ fi
 echo -e "$BASH_COLOR_Cyan"
 mount $partition /mnt 
 pacstrap /mnt base base-devel linux linux-firmware
+echo -e "Run Pactsrap again? (y/n)"
+read pacs
+if [ $pacs = "y" ]; then 
+echo -e "Running Pactsrap again \n"
+pacstrap /mnt base base-devel linux linux-firmware
+fi
 genfstab -U /mnt >> /mnt/etc/fstab
 sed -e '/^#sectionOneStart/,/^#sectionOneComplete/d' install.sh > /mnt/install2.sh
 chmod +x /mnt/install2.sh
