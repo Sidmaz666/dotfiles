@@ -54,10 +54,12 @@ fi
 echo -e "$BASH_COLOR_Cyan"
 echo -e "Modifying pacman.conf\n"
 sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf
-sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
-pacman --noconfirm -Sy archlinux-keyring
+sed -i "s/^#Color$/Color \nILoveCandy/" /etc/pacman.conf
+sed -i "s/^#SigLevel = Optional TrustAll $/SigLevel = Never/" /etc/pacman.conf
 loadkeys us
 timedatectl set-ntp true
+hwclock --systohc
+pacman --noconfirm -Sy archlinux-keyring
 echo -e "$BASH_COLOR_BrownOrange"
 clear
 lsblk
