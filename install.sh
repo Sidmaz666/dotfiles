@@ -122,7 +122,7 @@ sed -i "s/^#Color$/Color \n ILoveCandy/" /etc/pacman.conf
 ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 timedatectl set-ntp true
 hwclock --systohc
-pacman -Sy --noconfirm sed curl git archlinux-keyring NetworkManager
+pacman -Sy --noconfirm sed curl git archlinux-keyring networkmanager
 echo -e "$BASH_COLOR_LightGreen"
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
@@ -168,6 +168,7 @@ systemctl enable systemd-zram-setup@zram0.service
 echo -e "$BASH_COLOR_Purple"
 clear
 echo -e "Getting Paru"
+pacman -S --noconfirm git
 git clone https://aur.archlinux.org/paru.git /home/$username/paru 
 echo "Pre-Installation Finished"
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > install3.sh
