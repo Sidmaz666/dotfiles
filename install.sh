@@ -43,7 +43,7 @@ echo -e "$BASH_COLOR_Cyan"
 echo -e "$welcome_msg"
 echo -e "$BASH_COLOR_LightGreen"
 read -p "Continue?(y/n) " con
-if [ $con != y ]; then 
+if [ $con = "n" ]; then 
   exit
 fi
 echo -e "$BASH_COLOR_LightGreen" 
