@@ -154,7 +154,16 @@ curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/pacman.t
 rm /etc/issue
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/scripts/issuetxt.sh | sh > /etc/issue
 pacman -S --noconfirm $(cat /tmp/pacman.txt)
-sed -i 's/MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
+read -p "Failed! Retry? (y/n) " inspkg
+if [ $inspkg = "y" ]; then
+pacman -S --noconfirm $(cat /tmp/pacman.txt)
+fi
+sed -i 's/^MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf \
+  || sed -i 's/^#MODULES=""/MODULES=(amdgpu)/' /etc/mkinitcpio.conf \
+  || sed -i 's/^MODULES=()/MODULES=(amdgpu)/' /etc/mkinitcpio.conf \
+  || sed -i 's/^#MODULES=()/MODULES=(amdgpu)/' /etc/mkinitcpio.conf \
+  || sed -i 's/MODULES=()/MODULES=(amdgpu)/' /etc/mkinitcpio.conf \
+  || echo -e "MODULES=(amdgpu)" >> /etc/mkinitcpio.conf
 mkinitcpio -P
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 clear
@@ -217,7 +226,9 @@ rm -Rf $conf_dir/rofi
 rm -Rf $conf_dir/ytfzf
 cd dotfiles
 paru -Syyu --noconfirm
-paru -S $(cat pkgs/pkgs.txt) --noconfirm
+clear
+echo -e "Manually Select!\n"
+paru -S $(cat pkgs/pkgs.txt) 
 cp -R scripts $dot_dir
 mkdir -p $HOME/Pictures
 cp -R wall $HOME/Pictures
@@ -246,6 +257,7 @@ cd $dot_dir/scripts
 git clone https://github.com/windwp/rofi-color-picker.git 
 git clone https://github.com/junegunn/fzf.git 
 git clone https://github.com/wstam88/rofi-fontawesome.git 
+mkdir -p $conf_dir/vifm/vifmimg
 cd $conf_dir/vifm/vifmimg
 git clone https://github.com/cirala/vifmimg.git scripts 
 mkdir -p $HOME/.vim/pack/coc/start
@@ -268,7 +280,5 @@ echo -e "Installation Finished, enable Better Lock Screen Service Manually and R
 cd $HOME
 mkdir -p Downloads
 mv dotfiles $HOME/Downloads
-read -p "Reboot?(y/n)" xstarto
-if [ $xstarto = y ]; then
-  reboot
-fi
+exit
+
