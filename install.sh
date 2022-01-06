@@ -166,6 +166,7 @@ echo "Pre-Installation Finished"
 sed -e '/^#sectionTwoStart/,/^#sectionTwoComplete/d' install2.sh > install3.sh
 chown $username:$username install3.sh
 chown $username:$username /home/$username/paru
+chown $username:$username /tmp
 chmod +x install3.sh
 cp install3.sh /home/$username/install3.sh
 su -c /home/$username/install3.sh $username
@@ -175,26 +176,17 @@ exit
 part_two
 
 #sectionTwoComplete
+
 cd $HOME
-read -p "Reload Zram?(y/n) " zram
-if [ $zram = "y" ]; then
-echo -e "Enabling Zram!"
-sudo systemctl daemon-reload
-sudo systemctl start /dev/zram0
-fi
-dot_dir="$HOME/Documents"
-mkdir -p $HOME/.config
-conf_dir="$HOME/.config"
 echo -e "$BASH_COLOR_BrownOrange Getting Paru (AUR) Helper"
 sudo pacman -Syyu --noconfirm
 sudo pacman -S --needed --noconfirm base-devel
+dot_dir="$HOME/Documents"
+mkdir -p $HOME/.config
+conf_dir="$HOME/.config"
 cd paru
 makepkg -si 
-echo -e "\n"
-read -p "Unable to build Paru. Retry as sudo?(y/n) " err
-if [ $err = "y" ]; then
-  sudo makepkg -si
-fi
+echo -e "Building Paru...\n"
 curl -sL https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/pkgs/paru.txt -o /tmp/paru.txt
 paru -S --noconfirm $(cat /tmp/paru.txt)
 cd $HOME
@@ -267,6 +259,7 @@ sudo systemctl enable getty@tty1
 chsh -s /bin/zsh 
 echo -e "$BASH_COLOR_LightGreen"
 echo -e "Installation Finished, enable Better Lock Screen Service Manually and Rename Username(default Username random)\n"
+mv dotfiles $HOME/Downloads
 read -p "Reboot?(y/n)" $ xstarto
 if [ $xstarto = y ]; then
   reboot
