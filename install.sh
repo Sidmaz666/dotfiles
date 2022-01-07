@@ -287,6 +287,8 @@ cd paru
 makepkg -si 
 echo -e "Paru (AUR-Helper) Installed...\n"
 
+sudo sed -i "s/^#BottomUp$/SkipReview \nCleanAfter \n#BottomUp/" /etc/paru.conf
+
 cd $HOME
 rm -Rf $HOME/paru
 
@@ -303,11 +305,11 @@ cd dotfiles
 clear
 echo -e "Updating & Installing Extra Packages Via Paru!\n"
 echo -e "Manually Select the packages!\n"
-paru -Sy $(cat pkgs/pkgs.txt) 
+paru -S $(cat pkgs/pkgs.txt) 
 read -p "Failed to install all the packages?(y/n) " parufail
 if [ $parufail = "y" ]; then
   clear
-  paru -Sy $(cat pkgs/pkgs.txt)
+  paru -S $(cat pkgs/pkgs.txt)
 	read -p "Failed again?(y/n) " pag
 	if [ $pag = "y" ]; then
 	  clear
@@ -411,4 +413,3 @@ mkdir -p Downloads
 mv dotfiles $HOME/Downloads
 
 exit
-
