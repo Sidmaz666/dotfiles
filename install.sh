@@ -233,10 +233,9 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 clear
 echo -e "$BASH_COLOR_Cyan"
-echo "Enter Username: "
-read username
-useradd -m -G wheel $username
-passwd $username
+echo "Adding Default User as -> random ...Changing username would require modifying config files manually!!\n"
+useradd -m -G wheel random
+passwd random
 
 systemctl enable NetworkManager.service
 systemctl enable systemd-zram-setup@zram0.service
@@ -381,7 +380,7 @@ then
   echo '{"dependencies":{}}'> package.json
 fi
 
-npm install coc-snippets coc-html coc-json coc-tsserver coc-prettier coc-css coc-phpls coc-sql --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+npm install coc-snippets coc-html coc-json coc-tsserver coc-prettier coc-sh coc-css coc-phpls coc-sql --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
 
 cd $HOME
 git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
@@ -411,5 +410,7 @@ echo -e "Installation Finished, enable Better Lock Screen Service Manually!!\n Z
 cd $HOME
 mkdir -p Downloads
 mv dotfiles $HOME/Downloads
+
+echo -e "Reboot Now!"
 
 exit
