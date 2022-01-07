@@ -392,6 +392,9 @@ echo "Installing Better Lock Screen Fork Sharingan-Lock!"
 sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
 sudo cp  systemd/betterlockscreen@.service /etc/systemd/system/betterlockscreen@$USER.service
 
+echo -e "\nInstalling MPV Wrapper"
+sudo cp mpv/mpvw /usr/bin/mpvw
+
 echo -e "\nSetting-up TTY\n"
 sudo cp  systemd/logind.conf /etc/systemd/logind.conf
 sudo cp  rofi/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
