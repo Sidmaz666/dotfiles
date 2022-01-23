@@ -415,6 +415,6 @@ git clone https://github.com/Sidmaz666/dotfiles.git
 #mkdir -p Downloads
 #mv dotfiles $HOME/Downloads
 #
+#pip install psutils wheel setuptools bs4 iwlib 
 #echo -e "Reboot Now!"
-#
 #exit
