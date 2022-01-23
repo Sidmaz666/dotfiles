@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=mob
-Description=mobpsycho100
-ModuleName=script
-
-[script]
-ImageDir=/usr/share/plymouth/themes/mob
-ScriptFile=/usr/share/plymouth/themes/mob/mob.script
