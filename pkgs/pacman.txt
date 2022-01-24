@@ -363,9 +363,6 @@ lzo
 m4
 make
 man-db
-mariadb
-mariadb-clients
-mariadb-libs
 md4c
 mesa
 mkinitcpio
@@ -402,7 +399,6 @@ openssl
 opus
 orc
 p11-kit
-pacman
 pacman-contrib
 pacman-mirrorlist
 pahole
@@ -421,9 +417,6 @@ perl-error
 perl-ipc-run3
 perl-mailtools
 perl-timedate
-php
-php-apache
-phpmyadmin
 pinentry
 pixman
 pkgconf

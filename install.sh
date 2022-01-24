@@ -251,7 +251,7 @@ echo "Pre-Installation Finished"
 
 echo -e "$BASH_COLOR_Purple\n"
 
-read -p "Continue and Rice Your System?(y/n) " rice
+read -p "Continue Install Paru?(y/n) " rice
 if [ $rice = "n" ]; then
   exit
 fi
@@ -269,152 +269,108 @@ part_two
 
 #sectionTwoComplete
 
+clear
+echo -e "Installing Paru (AUR-Helper)\n"
+cd paru
+makepkg -si 
+echo -e "Paru (AUR-Helper) Installed...\n"
+
+sudo sed -i "s/^#BottomUp$/SkipReview \nCleanAfter \n#BottomUp/" /etc/paru.conf
+
 cd $HOME
 
-echo -e "$BASH_COLOR_BrownOrange"
+rm -Rf $HOME/paru
 
-#echo -e "Making Directories!"
-#mkdir -p $HOME/Documents
-#mkdir -p $HOME/.config
-#mkdir -p $HOME/Pictures
-#
-#dot_dir="$HOME/Documents"
-#conf_dir="$HOME/.config"
-#
-#clear
-#echo -e "Installing Paru (AUR-Helper)\n"
-#cd paru
-#makepkg -si 
-#echo -e "Paru (AUR-Helper) Installed...\n"
-#
-#sudo sed -i "s/^#BottomUp$/SkipReview \nCleanAfter \n#BottomUp/" /etc/paru.conf
-#
-#cd $HOME
-#rm -Rf $HOME/paru
-#
+clear
+echo -e "Installing Extra Packages Via Paru!\n"
+echo -e "Manually Select the packages!\n"
+paru -Sy $(cat pkgs/paru.txt) 
+read -p "Failed to install all the packages?(y/n) " parufail
+if [ $parufail = "y" ]; then
+  clear
+  paru -S $(cat pkgs/paru.txt)
+	read -p "Failed again?(y/n) " pag
+	if [ $pag = "y" ]; then
+	  clear
+	  paru -S $(cat pkgs/pkgs.txt)
+	fi
+fi
+
 clear
 echo -e "$BASH_COLOR_LightCyan"
 echo -e "$welcome_msg"
 echo -e "$BASH_COLOR_BrownOrange\nGetting All Of My Dotfiles....\n"
 echo -e "This Will Take Quite Some Time\n"
+
+git clone https://github.com/Sidmaz666/dotfiles.git .dotfiles 
+
+cd .dotfiles
+
+ln -s $PWD/.xinitrc $HOME
+ln -s $PWD/.bashrc $HOME
+ln -s $PWD/.bash_profile $HOME
+ln -s $PWD/.zshrc $HOME
+ln -s $PWD/.zprofile $HOME
+ln -s $PWD/.vimrc $HOME
+ln -s $PWD/.gtkrc-2.0 $HOME
+
+mkdir -p $HOME/Documents
+
+cp -r scripts $HOME/Documents
+
+cp -r .config $HOME
+
+echo -e "$BASH_COLOR_LightGreen" 
+
+echo -e "Getting Required Github Projects"
+cd $HOME/Documents/scripts
+git clone https://github.com/windwp/rofi-color-picker.git 
+git clone https://github.com/junegunn/fzf.git 
+git clone https://github.com/wstam88/rofi-fontawesome.git 
+
+mkdir -p $HOME/.vim/pack/coc/start
+cd $HOME/.vim/pack/coc/start
+git clone https://github.com/neoclide/coc.nvim.git --depth=1
+
+mkdir -p $conf_dir/coc/extensions
+cd $conf_dir/coc/extensions
+if [ ! -f package.json ]
+then
+  echo '{"dependencies":{}}'> package.json
+fi
+
+npm install coc-snippets coc-html coc-json coc-tsserver coc-prettier coc-sh coc-css coc-phpls coc-sql --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+
+pip install psutils wheel setuptools bs4 iwlib 
+
+cd $HOME
+git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
+
+clear
+cd $HOME/.dotfiles
+echo -e "$BASH_COLOR_Purple"
+echo "Installing Better Lock Screen Fork Sharingan-Lock!"
+sudo cp  bin/betterlockscreen /usr/bin/
+sudo cp  systemd/betterlockscreen@.service /etc/systemd/system/betterlockscreen@$USER.service
 #
-git clone https://github.com/Sidmaz666/dotfiles.git 
+echo -e "\nInstalling MPV Wrapper"
+sudo cp bin/mpvw /usr/bin/mpvw
 #
-#cd dotfiles
-#
-#clear
-#echo -e "Updating & Installing Extra Packages Via Paru!\n"
-#echo -e "Manually Select the packages!\n"
-#paru -S $(cat pkgs/pkgs.txt) 
-#read -p "Failed to install all the packages?(y/n) " parufail
-#if [ $parufail = "y" ]; then
-#  clear
-#  paru -S $(cat pkgs/pkgs.txt)
-#	read -p "Failed again?(y/n) " pag
-#	if [ $pag = "y" ]; then
-#	  clear
-#	  paru -S $(cat pkgs/pkgs.txt)
-#	fi
-#fi
-#
-#clear
-#rm -Rf $conf_dir/picom
-#rm -Rf $conf_dir/kitty
-#rm -Rf $conf_dir/dunst
-#rm -Rf $conf_dir/mpv
-#rm -Rf $conf_dir/neofetch
-#rm -Rf $conf_dir/qtile
-#rm -Rf $conf_dir/vifm
-#rm -Rf $conf_dir/gtk-2.0
-#rm -Rf $conf_dir/gtk-3.0
-#rm -Rf $conf_dir/rofi
-#rm -Rf $conf_dir/ytfzf
-#
-#cp -R scripts $dot_dir
-#cp -R wall $HOME/Pictures
-#cp -R picom $conf_dir
-#cp -R kitty $conf_dir
-#cp -R dunst $conf_dir
-#cp -R mpv $conf_dir
-#cp -R neofetch $conf_dir
-#cp -R qtile $conf_dir
-#cp -R vifm $conf_dir
-#cp -R gtk-2.0 $conf_dir
-#cp -R gtk-3.0 $conf_dir
-#cp -R ytfzf $conf_dir
-#
-#mkdir -p $conf_dir/rofi/applets/
-#mv rofi/powermenu $conf_dir/rofi/applets/android
-#
-#mkdir -p $HOME/.cache
-#mv betterlockscreen_fork/betterlockscreen $HOME/.cache/betterlockscreen
-#
-#cp zsh/zshrc $HOME/.zshrc
-#cp zsh/zprofile $HOME/.zprofile
-#cp bash/bashrc $HOME/.bashrc
-#cp bash/bash_profile $HOME/.bash_profile
-#cp vim/vimrc $HOME/.vimrc
-#cp xinit/xinitrc $HOME/.xinitrc
-#
-#echo -e "$BASH_COLOR_LightGreen" 
-#
-#echo -e "Getting Required Github Projects"
-#cd $dot_dir/scripts
-#git clone https://github.com/windwp/rofi-color-picker.git 
-#git clone https://github.com/junegunn/fzf.git 
-#git clone https://github.com/wstam88/rofi-fontawesome.git 
-#
-#mkdir -p $conf_dir/vifm/vifmimg
-#cd $conf_dir/vifm/vifmimg
-#
-#rm -Rf $conf_dir/vifm/vifmimg/scripts
-#git clone https://github.com/cirala/vifmimg.git scripts 
-#
-#mkdir -p $HOME/.vim/pack/coc/start
-#cd $HOME/.vim/pack/coc/start
-#git clone https://github.com/neoclide/coc.nvim.git --depth=1
-#
-#mkdir -p $conf_dir/coc/extensions
-#cd $conf_dir/coc/extensions
-#if [ ! -f package.json ]
-#then
-#  echo '{"dependencies":{}}'> package.json
-#fi
-#
-#npm install coc-snippets coc-html coc-json coc-tsserver coc-prettier coc-sh coc-css coc-phpls coc-sql --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
-#
-#cd $HOME
-#git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
-#
-#clear
-#cd $HOME/dotfiles
-#echo -e "$BASH_COLOR_Purple"
-#echo "Installing Better Lock Screen Fork Sharingan-Lock!"
-#sudo cp  betterlockscreen_fork/sharinganlock /usr/bin/betterlockscreen
-#sudo cp  systemd/betterlockscreen@.service /etc/systemd/system/betterlockscreen@$USER.service
-#
-#echo -e "\nInstalling MPV Wrapper"
-#sudo cp mpv/mpvw /usr/bin/mpvw
-#
-#echo -e "\nSetting-up TTY\n"
-#sudo cp  systemd/logind.conf /etc/systemd/logind.conf
-#sudo cp  rofi/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
-#sudo cp  systemd/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-#sudo systemctl enable getty@tty1
-#
-#clear
-#echo -e "$BASH_COLOR_LightCyan"
-#echo -e "Changing Default shell to ZSH\n"
-#chsh -s /bin/zsh 
-#
-#clear
-#echo -e "$BASH_COLOR_LightGreen"
-#echo -e "Installation Finished, enable Better Lock Screen Service Manually!!\n Zram might need a restart too!!\n"
-#
-#cd $HOME
-#mkdir -p Downloads
-#mv dotfiles $HOME/Downloads
-#
-#pip install psutils wheel setuptools bs4 iwlib 
-#echo -e "Reboot Now!"
-#exit
+echo -e "\nSetting-up TTY & Dmenu\n"
+sudo cp  etc/modern-dmenu.rasi /usr/share/rofi/themes/dmenu.rasi
+sudo cp  etc/getty@tty1.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+sudo systemctl enable getty@tty1
+
+clear
+echo -e "$BASH_COLOR_LightCyan"
+echo -e "Changing Default shell to ZSH\n"
+chsh -s /bin/zsh 
+
+clear
+echo -e "$BASH_COLOR_LightGreen"
+echo -e "Installation Finished, enable Better Lock Screen Service Manually!!\n Zram might need a restart too!!\n"
+
+echo -e "Reboot Now!(y/n)"
+read -r reboo
+
+[[ "$reboo" = "y" ]] && reboot || exit && reboot
