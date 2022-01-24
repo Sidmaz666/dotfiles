@@ -320,6 +320,8 @@ cp -r scripts $HOME/Documents
 
 cp -r .config $HOME
 
+sed -i "s/random/$USER/g" $HOME/.config/qtile/config.py
+
 echo -e "$BASH_COLOR_LightGreen" 
 
 echo -e "Getting Required Github Projects"
