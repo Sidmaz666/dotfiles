@@ -174,8 +174,8 @@ alias killserv='sudo systemctl disable httpd && sudo systemctl disable mariadb &
 alias rotate="xrandr -o"
 alias live-server="live-server $HOME/Documents/http"
 alias www="cd $HOME/Documents/http/www"
-alias nv="vim -u NONE -U NONE -N -i NONE"
-alias snv="sudo vim -u NONE -U NONE -N -i NONE"
+alias nv="vim -u NONE -U NONE -N -i NONE -c 'set nu relativenumber backspace=indent,eol,start cursorline' -c 'syntax on'"
+alias snv="vim -u NONE -U NONE -N -i NONE -c 'set nu relativenumber backspace=indent,eol,start cursorline' -c 'syntax on'"
 alias read-manga="feh -FSmtime --reverse --start-at P1.jpg -d ./"
 alias share='curl -F"file=@$(find $HOME/Documents $HOME/.config $HOME/Downloads -type f | fzf --no-preview --layout=reverse --cycle --height=50%)" 0x0.st | xclip -sel c '
 alias stop-b="sh $HOME/Documents/scripts/stop_battery_notification.sh"
