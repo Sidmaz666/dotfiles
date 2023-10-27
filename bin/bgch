@@ -1,3 +1,4 @@
 #!/bin/bash
 sed -i "s|wallpaper=.*$|wallpaper='$(pwd)/$1',|" ~/.config/qtile/config.py
 qtile cmd-obj -o cmd -f restart
+betterlockscreen -u $(pwd)/$1 --dim 50 --blur 0.8 
