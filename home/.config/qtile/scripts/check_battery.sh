@@ -7,7 +7,7 @@ check_interval=2
 while true; do
 battery_status=$(acpi -b)
 charging=$(echo "$battery_status" | grep -c "Charging")
-full_charge=$(echo "$battery_status" | grep -c "Not Charging")
+full_charge=$(echo "$battery_status" | grep -c "Not charging")
 discharging=$(echo "$battery_status" | grep -c "Discharging")
 level=$(echo "$battery_status" \
   | cut -d, -f2 \
