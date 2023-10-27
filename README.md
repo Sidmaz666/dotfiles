@@ -1,3 +1,3 @@
 # Dotfiles!!
 
-![preview](https://raw.githubusercontent.com/Sidmaz666/dotfiles/main/desktop.png)
+![preview](https://raw.githubusercontent.com/Sidmaz666/dotfiles/assets/desktop.png)

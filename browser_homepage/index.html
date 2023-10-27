@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="./styles/style.css" rel="stylesheet" type="text/css" />
+    <script src="./js/main.js"></script>
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="prompt">
+        ~
+        <span> ▲ </span>
+        <b style="color: #c6ff00"> tree </b>
+	<span id="time" class="time"> </span>
+      </div>
+      <div class="row">
+        <div class="column">
+          <div class="tree">
+            <h1>.</h1>
+            <ul>
+              <li>
+                <h1> General</h1>
+                <ul>
+                  <li>
+                    <a href="https://www.github.com/"> Git  </a>
+                  </li>
+                  <li>
+                    <a href="https://www.youtube.com/"> Youtube  </a>
+                  </li>
+                  <li>
+                    <a href="https://drive.google.com"> Drive 🖫 </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h1> Social Media</h1>
+                <ul>
+                  <li>
+                    <a href="https://www.instagram.com/?theme=dark">
+                      Instagram 
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://web.whatsapp.com"> WhatsApp  </a>
+                  </li>
+                  <li>
+                    <a href="https://web.whatsapp.com"> Facebook  </a>
+                  </li>
+                  <li>
+                    <a href="https://mail.protonmail.com/login"> Mail  </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="tree">
+            <h1>.</h1>
+            <ul>
+              <li>
+                <h1> Often</h1>
+                <ul>
+                  <li>
+                    <a href="https://archlinux.org/"> Arch Wiki  </a>
+                  </li>
+                  <li>
+                    <a href="https://aniwatch.to/"> Anime  </a>
+                  </li>
+                  <li>
+                    <a href="https://chat.openai.com/"> Chat GPT  </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">
+        ~
+        <span> ▲ </span>
+        <b style="color: #c6ff00">
+          browse
+          <i style="color: #64dd17"> --search </i>
+        </b>
+      </div>
+      <form action="https://duckduckgo.com/" method="GET">
+        <h1 style="margin: 20px"></h1>
+        <input
+          name="q"
+          placeholder="Search "
+          style="
+            outline: none;
+            border-left: 0px;
+            margin-top: 8px;
+            border-top: 0px;
+            border-right: 0px;
+            border-radius: 0px;
+            padding-left: 7px;
+            margin-left: 10px;
+            border-color: #00bcd4;
+            height: 20px;
+          "
+          type="text"
+        />
+      </form>
+    </div>
+    <script>
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>

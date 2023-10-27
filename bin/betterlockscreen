@@ -25,7 +25,7 @@ init_config () {
     loginbox=00000066
     loginshadow=00000000
     locktext=" Type password to unlock..."
-    font="Iosevka Term"
+    font="Iosevka Nerd Font"
     ringcolor=F2F2F211
     insidecolor=00000000
     separatorcolor=00000000
@@ -34,17 +34,16 @@ init_config () {
     ringwrongcolor=#75757500
     insidewrongcolor=#EC407A17
     timecolor=ffffffff
-    time_format="%H:%M:%S"
+    time_format="%l:%M:%S %p"
     greetercolor=ffffffff
     layoutcolor=ffffffff
-    keyhlcolor=#00000000
-    bshlcolor=#00000000
-    verifcolor=ffffffff
-    wrongcolor=#26C6DA
+    keyhlcolor=#c9124090
+    bshlcolor=#c912a590
+    verifcolor=#18e815
+    wrongcolor=#e81577
     modifcolor=d23c3dff
     bgcolor=000000ff
     wallpaper_cmd="feh --bg-fill"
-    time_format="%l:%M:%S %p"
 
     # read user config
     USER_CONF="${XDG_CONFIG_HOME:-$HOME/.config}/betterlockscreenrc"
@@ -126,7 +125,7 @@ lock() {
 
     $i3lockcolor_bin \
         --image "$image" \
-        --ind-pos="x+961:y+h-590" \
+        --ind-pos="x+683:y+h-384" \
         --radius=50 \
         --ring-width=100 \
         --inside-color="$insidecolor" \
@@ -139,20 +138,6 @@ lock() {
         --line-uses-inside \
         --keyhl-color="$keyhlcolor" \
         --bshl-color="$bshlcolor" \
-        --clock --force-clock \
-        --time-pos="ix-150:iy-350" \
-        --time-align 1 \
-        --time-str "$time_format" \
-        --time-color="$timecolor" \
-        --time-font="$font" \
-        --time-size="$fontlg" \
-        --date-str "" \
-        --greeter-pos="ix-200:iy+450" \
-        --greeter-align 1 \
-        --greeter-text "$locktext" \
-        --greeter-color="$greetercolor" \
-        --greeter-font="$font" \
-        --greeter-size="35" \
         --layout-pos="ix-265:iy+32" \
         --layout-align 1 \
         --layout-color="$layoutcolor" \
@@ -179,6 +164,14 @@ lock() {
         --pass-screen-keys \
         --pass-volume-keys \
         --pass-power-keys \
+	--clock --force-clock \
+        --time-pos="ix-125:iy-200" \
+        --time-align 1 \
+        --time-str "$time_format" \
+        --time-color="$timecolor" \
+        --time-font="$font" \
+        --time-size="$fontlg" \
+        --date-str "" \
         "${lockargs[@]}"
 }
 
