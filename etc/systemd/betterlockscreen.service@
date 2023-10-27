@@ -8,7 +8,7 @@ User=%i
 Type=simple
 Environment=DISPLAY=:0
 ExecStartPre=/usr/bin/xset dpms force suspend
-ExecStart=/usr/bin/betterlockscreen -l dimblur
+ExecStart=/usr/bin/lock
 TimeoutSec=infinity
 
 [Install]

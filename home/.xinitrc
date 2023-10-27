@@ -14,8 +14,10 @@ xidlehook \
   --timer 60 \
   'xrandr --output "$PRIMARY_DISPLAY" --brightness 0.7' \
   'xrandr --output "$PRIMARY_DISPLAY" --brightness 1' \
-  --timer 120 'betterlockscreen -l dimblur' ''\
-  --timer 300 'systemctl suspend' '' &
+  --timer 120 'lock' \
+  'xrandr --output "$PRIMARY_DISPLAY" --brightness 1' \
+  --timer 300 'systemctl suspend' \
+  'xrandr --output "$PRIMARY_DISPLAY" --brightness 1' &
 sleep 30s && sh ~/.config/qtile/scripts/check_battery.sh &
 
 while true; do
